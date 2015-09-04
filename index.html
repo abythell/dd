@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html ng-app="dd">
+
+    <head>
+        <title>Daily Declan</title> 
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">        
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>        
+    </head>
+
+    <body ng-controller="DdController as dd">
+
+        <!-- Date Control -->
+        <div class="h1">
+            <button class="btn btn-primary" ng-click="dd.addDays( - 1)">&lt;</button>
+            {{dd.date| date:'MM/dd/yyyy'}}
+            <button class="btn btn-primary" ng-click="dd.addDays(1)" ng-disabled="dd.isToday()">&gt;</button>
+        </div>
+
+        <!-- Notes List -->
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="note in dd.notes| orderBy:'when'">                
+                <strong>{{note.who}}:&nbsp;</strong>
+                {{note.what}}
+                <em class="pull-right">{{note.when| date:'h:mma'}}</em>                 
+            </li>
+        </ul>    
+
+        <!-- Add Notes Form -->
+        <form name="noteForm" class="form-inline" ng-controller="NoteController as noteCtrl" 
+              ng-submit="noteForm.$valid && noteCtrl.addNote(dd)" novalidate ng-show="dd.isToday()">                  
+            <div class="input-group">
+                <label for="inputWho" class="sr-only">Who</label>                 
+                <input type="text" class="form-control" id="inputWho" ng-model="noteCtrl.note.who" placeholder="Who are you?" required/>                                
+            </div>
+            <div class="input-group">                
+                <label for="inputWhat" class="sr-only">What</label>                     
+                <input type="text" class="form-control" id="inputWhat" ng-model="noteCtrl.note.what" placeholder="What do you have to add?" required/>
+            </div>
+            <div class="input-group">                
+                <button type="submit" class="btn btn-primary" ng-disabled="!noteForm.$valid">Add</button>                
+            </div>                       
+        </form>
+
+        <script type="text/javascript" src="app.js"></script>
+    </body>
+</html>
