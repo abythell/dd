@@ -1,0 +1,21 @@
+<div class="row col-sm-12">
+    <form>    
+        <div class="checkbox">
+            <label class="control-label col-sm-2" ng-repeat="mood in moodCtrl.moods">
+                <input type="checkbox" 
+                       name="{{mood}}" 
+                       ng-click="moodCtrl.save()"
+                       ng-checked="moodCtrl.mood.{{mood}}"
+                       ng-model="moodCtrl.mood[mood]">               
+                {{mood}}
+            </label>
+        </div>
+    </form>   
+</div>
+
+<div class="row col-sm-12">
+    <alert type="info">
+        Further work needs to be done here to correctly define the
+        labels and fields
+    </alert>
+</div>

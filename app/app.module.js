@@ -1,8 +1,20 @@
 (function() {
     /*     
-     * Declare Angular Module
-     */
-    var app = angular.module('dd', []);
+     * Declare Angular Modules
+     */    
+    angular.module('dateModule', []);
+    angular.module('summaryModule', ['ui.bootstrap']);
+    angular.module('alertModule', ['ui.bootstrap']);
+    angular.module('notesModule', ['dateModule']);
+    angular.module('moodModule', ['dateModule']);
+    
+    var app = angular.module('appDD', ['dateModule', 
+        'summaryModule', 
+        'alertModule', 
+        'notesModule',
+        'moodModule',
+        'ui.bootstrap'
+    ]);
    
    /*
     * Some sample data to show for now
@@ -30,37 +42,22 @@
          * we can pull real data from a data store
          */        
         this.notes = notes;
-        
-        /*
-         * Default to today but allow other days to be selected.
-         * TODO: add a more stylish date picker.
-         */
-        this.date = new Date();        
-        this.addDays = function(i) {            
-            this.date.setDate(this.date.getDate() + i);            
-        };                                
-        
-        this.isToday = function() {
-            var today = new Date().toDateString();
-            var selected = this.date.toDateString();
-            return (selected === today);
-        };
-        
+                        
     });
     
     /**
      * Handle adding new notes via form.
      */
-    app.controller('NoteController', function() {
+    app.controller('NoteController', ['dateService', function(date) {
        this.note = {};
-                     
+       this.date = date;              
        this.addNote = function(dd) {
            this.note.when = Date.now();
            dd.notes.push(this.note);
            this.note = {};
        };
        
-    });            
+    }]);            
     
 })();
 

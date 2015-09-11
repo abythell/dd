@@ -1,0 +1,8 @@
+<div class="h1">
+    <button class="btn btn-primary" ng-click="dateCtrl.date.addDays(-1)">&lt;</button>
+    
+    {{dateCtrl.date.getDate()| date:'EEE MMM dd, yyyy'}}
+    
+    <button class="btn btn-primary" ng-click="dateCtrl.date.addDays(1)" 
+            ng-disabled="dateCtrl.date.isToday()">&gt;</button>
+</div>

@@ -1,46 +1,60 @@
 <!DOCTYPE html>
-<html ng-app="dd">
+<html ng-app="appDD">
 
     <head>
-        <title>Daily Declan</title> 
+        <title>The Daily Declan</title> 
+        <link rel="shortcut icon" href="">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">        
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>        
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.js"></script>
     </head>
 
     <body ng-controller="DdController as dd">
 
-        <!-- Date Control -->
-        <div class="h1">
-            <button class="btn btn-primary" ng-click="dd.addDays( - 1)">&lt;</button>
-            {{dd.date| date:'MM/dd/yyyy'}}
-            <button class="btn btn-primary" ng-click="dd.addDays(1)" ng-disabled="dd.isToday()">&gt;</button>
+        <div class="container">
+
+            <div class="row">
+                <h1 class="col-sm-3">The Daily Declan</h1>
+                <ab-date class="col-sm-5 pull-right"></ab-date>
+            </div>            
+
+            <div class="row">
+                <ab-alert></ab-alert>                
+            </div>
+
+            <div class="row">
+                <tabset>                    
+                    <tab heading="Mood"><ab-moods></ab-moods></tab>
+                    <tab heading="Notes"><ab-notes></ab-notes></tab>                    
+                    <tab heading="Medications">Content Goes Here</tab>
+                    <tab heading="Supplies">Content Goes Here</tab>
+                    <tab heading="Food">Content Goes Here</tab>
+                    <tab heading="Summary"><ab-summary></ab-summary></tab
+                </tabset>
+            </div>
+
         </div>
 
-        <!-- Notes List -->
-        <ul class="list-group">
-            <li class="list-group-item" ng-repeat="note in dd.notes| orderBy:'when'">                
-                <strong>{{note.who}}:&nbsp;</strong>
-                {{note.what}}
-                <em class="pull-right">{{note.when| date:'h:mma'}}</em>                 
-            </li>
-        </ul>    
+        <!-- TODO: minifiy and combine all these -->
+        <script type="text/javascript" src="app/app.module.js"></script>                
 
-        <!-- Add Notes Form -->
-        <form name="noteForm" class="form-inline" ng-controller="NoteController as noteCtrl" 
-              ng-submit="noteForm.$valid && noteCtrl.addNote(dd)" novalidate ng-show="dd.isToday()">                  
-            <div class="input-group">
-                <label for="inputWho" class="sr-only">Who</label>                 
-                <input type="text" class="form-control" id="inputWho" ng-model="noteCtrl.note.who" placeholder="Who are you?" required/>                                
-            </div>
-            <div class="input-group">                
-                <label for="inputWhat" class="sr-only">What</label>                     
-                <input type="text" class="form-control" id="inputWhat" ng-model="noteCtrl.note.what" placeholder="What do you have to add?" required/>
-            </div>
-            <div class="input-group">                
-                <button type="submit" class="btn btn-primary" ng-disabled="!noteForm.$valid">Add</button>                
-            </div>                       
-        </form>
+        <script type="text/javascript" src="app/components/date/dateController.js"></script>        
+        <script type="text/javascript" src="app/components/date/dateService.js"></script>        
+        <script type="text/javascript" src="app/components/date/dateDirective.js"></script>        
 
-        <script type="text/javascript" src="app.js"></script>
+        <script type="text/javascript" src="app/components/summary/summaryDirective.js"></script>        
+        
+        <script type="text/javascript" src="app/components/alert/alertDirective.js"></script>        
+        <script type="text/javascript" src="app/components/alert/alertController.js"></script>        
+        
+        <script type="text/javascript" src="app/components/notes/notesDirective.js"></script>        
+        <script type="text/javascript" src="app/components/notes/notesController.js"></script>        
+        <script type="text/javascript" src="app/components/notes/notesService.js"></script>        
+        
+        <script type="text/javascript" src="app/components/mood/moodDirective.js"></script>        
+        <script type="text/javascript" src="app/components/mood/moodController.js"></script>        
+        <script type="text/javascript" src="app/components/mood/moodService.js"></script>        
+
+
     </body>
 </html>
