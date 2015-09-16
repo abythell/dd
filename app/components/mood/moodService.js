@@ -1,22 +1,12 @@
 (function () {
-    angular.module('moodModule').service('moodService', function () {
-        
-        //TODO: load and save moods to a data store
-        this.mood = {
-                happy: true          
-            };
-        
-        this.getMood = function() {
-            return this.mood;
-        };
-        
-        this.setMood = function(mood) {           
-           this.mood = mood;           
-        };
-        
-        //TODO: define keys and values so we avoid spaces and underscores
-        //where they are unwanted.
-        this.moodList = [
+    angular.module('moodModule').factory('moodService', ['$rootScope', 'dateService',
+        function ($rootScope, dateService) {
+
+            /*
+             * List all 'moods' here.
+             * 
+             */            
+            var moodList = [
             "happy",
             "smiles",
             "laughing",
@@ -43,6 +33,39 @@
             "laundry"            
         ];
 
-    });
+
+            var moodService = {};
+            
+            moodService.data = {};
+
+            moodService.moodList = moodList;
+
+            moodService.load = function () {
+                if (dateService.isToday()) {
+                    moodService.data = {happy: true}; //TODO: fetch real data
+                } else {
+                    moodService.data = {};
+                }
+            };
+
+            moodService.save = function (name) {
+                //TODO: save to data store
+            };
+
+            moodService.get = function () {
+                return moodService.data;
+            };
+
+            /*
+             * Update the data when the date changes.
+             */
+            $rootScope.$on('dateChangeEvent', function (event, date) {
+                moodService.load(date);
+            });
+
+            moodService.load(); //Set initial value
+            return moodService;
+
+        }]);
 
 })();

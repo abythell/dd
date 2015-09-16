@@ -1,7 +1,18 @@
 (function () {
     angular.module('dateModule').controller('DateController', ['dateService', function (dateService) {
-            var date = dateService;
-            this.date = date;
+            
+            this.getDate = function() {
+                return dateService.selectedDate;
+            }
+            
+            this.isToday = function() {
+                return dateService.isToday();
+            }
+            
+            this.addDays = function(i) {
+                return dateService.addDays(i);
+            }
+            
         }]);
 
 })();

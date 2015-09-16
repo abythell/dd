@@ -1,23 +1,24 @@
 (function () {
-    angular.module('dateModule').service('dateService', function() {
-    
-        var date = new Date();
-        //this.date = date;
-        
-        this.getDate = function() {
-            return date;
-        };
+    angular.module('dateModule').service('dateService', ['$rootScope', 
+        function($rootScope) {
 
-        this.isToday = function () {
+        var date = {};
+
+        date.selectedDate = new Date();
+
+        date.isToday = function () {
             var today = new Date().toDateString();
-            var selected = date.toDateString();
+            var selected = date.selectedDate.toDateString();
             return (selected === today);
         };
-        
-        this.addDays = function (i) {
-                date.setDate(date.getDate() + i);
-            };
-        
-    });
+
+        date.addDays = function (i) {
+            date.selectedDate.setDate(date.selectedDate.getDate() + i);     
+            $rootScope.$emit('dateChangeEvent', date.selectedDate);
+        };
+
+        return date;
+
+    }]);
 
 })();
