@@ -4,27 +4,39 @@
         '$rootScope', 'dateService', function (moodService, $rootScope, dateService) {
             
             this.moodList = moodService.moodList;
-            var mood = moodService.getMoods(dateService.selectedDate);
+            var moodAM = moodService.getMoods(dateService.selectedDate, 'am');
+            var moodPM = moodService.getMoods(dateService.selectedDate, 'pm');
            
-            this.mood = function() {
-                return mood;
-            }
+            this.moodAM = function() {
+                return moodAM;
+            };
+            
+            this.moodPM = function() {
+                return moodPM;
+            };
             
             this.editable = function() {
                 return dateService.isToday();
-            }
+            };
             
-            this.save = function() {
+            this.saveAM = function() {
                 if (this.editable()) {
-                    mood.$save();
+                    moodAM.$save();
                 }
-            }
+            };
+            
+            this.savePM = function() {
+                if (this.editable()) {
+                    moodPM.$save();
+                }
+            };
             
             /*
              * Update the data when the date changes.
              */
             $rootScope.$on('dateChangeEvent', function (event, date) {
-                mood = moodService.getMoods(date);
+                moodAM = moodService.getMoods(date, 'am');
+                moodPM = moodService.getMoods(date, 'pm');
             });
             
         }]);

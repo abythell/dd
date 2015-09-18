@@ -8,8 +8,8 @@
             var ref = new Firebase('https://brilliant-inferno-6689.firebaseio.com');
 
             /*
-             * List all 'moods' here.
-             * 
+             * List all 'moods' here.  You can add new ones as needed, but
+             * removing or renaming a mood will affect historical data.
              */
             var moodList = [
                 "happy",
@@ -19,22 +19,22 @@
                 "crying",
                 "pouting",
                 "drooling",
-                "wet_diaper",
+                "wet diaper",
                 "tired",
                 "slept",
                 "coughing",
                 "gagging",
                 "phlegm",
-                "running_nose",
+                "running nose",
                 "pale",
                 "BM",
                 "GERD",
-                "tolerated_feeds",
-                "blood_in_tube",
-                "lots_of_venting",
-                "cuts_bruises_etc",
+                "tolerated feeds",
+                "blood in tube",
+                "lots of venting",
+                "cuts, bruises, etc.",
                 "stretches",
-                "standing_frame",
+                "standing frame",
                 "laundry"
             ];
 
@@ -43,9 +43,9 @@
            /*
             * Fetch object data from <firebase-url>/yyyy-MM-dd/mood
             */
-            this.getMoods = function(date) {
+            this.getMoods = function(date, tod) {
                 var key = $filter('date')(date, "yyyy-MM-dd");
-                return $firebaseObject(ref.child('mood').child(key));
+                return $firebaseObject(ref.child(key).child('mood' + tod));
             };
 
         }]);
