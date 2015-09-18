@@ -1,23 +1,31 @@
 (function () {
 
     angular.module('moodModule').controller('MoodController', ['moodService',
-        function (moodService) {
+        '$rootScope', 'dateService', function (moodService, $rootScope, dateService) {
             
             this.moodList = moodService.moodList;
+            var mood = moodService.getMoods(dateService.selectedDate);
+           
+            this.mood = function() {
+                return mood;
+            }
             
-            /**
-             * Bind the model to the get() function.  Notice how it binds to
-             * the function, not the results of the function.
-             */
-            this.mood = moodService.get;            
+            this.editable = function() {
+                return dateService.isToday();
+            }
+            
+            this.save = function() {
+                if (this.editable()) {
+                    mood.$save();
+                }
+            }
             
             /*
-             * Send button state back to the service as soon as it changes.
-             * This avoids having to use a separate "save" button.
+             * Update the data when the date changes.
              */
-            this.save = function(moodName) {
-                moodService.save(moodName);
-            }
+            $rootScope.$on('dateChangeEvent', function (event, date) {
+                mood = moodService.getMoods(date);
+            });
             
         }]);
 

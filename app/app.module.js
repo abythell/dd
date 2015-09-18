@@ -13,7 +13,8 @@
         'alertModule', 
         'notesModule',
         'moodModule',
-        'ui.bootstrap'
+        'ui.bootstrap',
+        'firebase'
     ]);
    
    /*

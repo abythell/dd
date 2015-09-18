@@ -1,70 +1,52 @@
 (function () {
-    angular.module('moodModule').factory('moodService', ['$rootScope', 'dateService',
-        function ($rootScope, dateService) {
+    angular.module('moodModule').service('moodService', ['$firebaseObject', 
+        '$filter', function ($firebaseObject, $filter) {
+
+            /*
+             * URL of firebase app
+             */
+            var ref = new Firebase('https://brilliant-inferno-6689.firebaseio.com');
 
             /*
              * List all 'moods' here.
              * 
-             */            
-            var moodList = [
-            "happy",
-            "smiles",
-            "laughing",
-            "upset",
-            "crying",
-            "pouting",
-            "drooling",
-            "wet_diaper",
-            "tired",
-            "slept",
-            "coughing",
-            "gagging",
-            "phlegm",
-            "running_nose",
-            "pale",
-            "BM",
-            "GERD",
-            "tolerated_feeds",
-            "blood_in_tube",
-            "lots_of_venting",
-            "cuts_bruises_etc",
-            "stretches",
-            "standing_frame",
-            "laundry"            
-        ];
-
-
-            var moodService = {};
-            
-            moodService.data = {};
-
-            moodService.moodList = moodList;
-
-            moodService.load = function () {
-                if (dateService.isToday()) {
-                    moodService.data = {happy: true}; //TODO: fetch real data
-                } else {
-                    moodService.data = {};
-                }
-            };
-
-            moodService.save = function (name) {
-                //TODO: save to data store
-            };
-
-            moodService.get = function () {
-                return moodService.data;
-            };
-
-            /*
-             * Update the data when the date changes.
              */
-            $rootScope.$on('dateChangeEvent', function (event, date) {
-                moodService.load(date);
-            });
+            var moodList = [
+                "happy",
+                "smiles",
+                "laughing",
+                "upset",
+                "crying",
+                "pouting",
+                "drooling",
+                "wet_diaper",
+                "tired",
+                "slept",
+                "coughing",
+                "gagging",
+                "phlegm",
+                "running_nose",
+                "pale",
+                "BM",
+                "GERD",
+                "tolerated_feeds",
+                "blood_in_tube",
+                "lots_of_venting",
+                "cuts_bruises_etc",
+                "stretches",
+                "standing_frame",
+                "laundry"
+            ];
 
-            moodService.load(); //Set initial value
-            return moodService;
+            this.moodList = moodList;
+           
+           /*
+            * Fetch object data from <firebase-url>/yyyy-MM-dd/mood
+            */
+            this.getMoods = function(date) {
+                var key = $filter('date')(date, "yyyy-MM-dd");
+                return $firebaseObject(ref.child('mood').child(key));
+            };
 
         }]);
 

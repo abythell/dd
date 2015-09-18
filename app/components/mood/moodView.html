@@ -3,7 +3,8 @@
         <button type="button" class="btn btn-block" btn-checkbox
                 ng-model="moodCtrl.mood()[moodName]" 
                 ng-class="moodCtrl.mood()[moodName] ? 'btn-primary' : ''"
-                ng-change="moodCtrl.save(moodName)">                
+                ng-change="moodCtrl.save()"
+                ng-disabled="!moodCtrl.editable()">                
             {{moodName}}
         </button>
         <br/>
