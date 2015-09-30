@@ -1,9 +1,10 @@
 (function () {
 
     angular.module('loginModule').controller('LoginController', ['$location',
-        'loginService', '$scope', function ($location, loginService, $scope) {
+        'loginService', '$scope', '$cookies', function ($location, loginService, 
+        $scope, $cookies) {
 
-            this.email = '';
+            this.email = $cookies.get('lastuser');
             this.password = '';
 
             this.login = function () {
@@ -19,6 +20,7 @@
                             if (authData.password.isTemporaryPassword) {
                                 $location.path("/reset");
                             } else {
+                                $cookies.put('lastuser', authData.password.email);
                                 $location.path("/view");
                             }
                         }).catch(function (error) {

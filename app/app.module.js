@@ -19,7 +19,8 @@
         'firebase',
         'loginModule',
         'ngRoute',
-        'userModule'
+        'userModule',
+        'ngCookies'
     ]);
     app.controller('DdController', ['$rootScope', function ($rootScope) {
             $rootScope.firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
