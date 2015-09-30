@@ -8,6 +8,8 @@
     angular.module('notesModule', []);
     angular.module('moodModule', []);
     angular.module('loginModule', []);
+    angular.module('userModule', []);
+    
     var app = angular.module('appDD', ['dateModule',
         'summaryModule',
         'alertModule',
@@ -16,7 +18,8 @@
         'ui.bootstrap',
         'firebase',
         'loginModule',
-        'ngRoute'
+        'ngRoute',
+        'userModule'
     ]);
     app.controller('DdController', ['$rootScope', function ($rootScope) {
             $rootScope.firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';

@@ -1,10 +1,10 @@
 <div class="btn-group" dropdown is-open="status.isopen">
     <button id="single-button" type="button" class="btn btn-primary" 
             dropdown-toggle ng-disabled="disabled">
-        {{authData.password.email}} <span class="caret"></span>
+        {{username}} <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
         <li role="menuitem"><a href="#/login" ng-click="signout()">Sign Out</a></li>        
-        <li role="menuitem"><a href="#/reset">Change Password</a></li>        
+        <li role="menuitem"><a href="#/reset">Change Password</a></li>           
     </ul>
 </div>

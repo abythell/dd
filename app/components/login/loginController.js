@@ -15,7 +15,7 @@
                 };
 
                 loginService.$authWithPassword(credentials).then(
-                        function (authData) {
+                        function (authData) {                            
                             if (authData.password.isTemporaryPassword) {
                                 $location.path("/reset");
                             } else {
@@ -50,13 +50,32 @@
 
         }]);
 
+    
     angular.module('loginModule').controller('LoginButtonController', ['$scope',
-        'loginService', '$location', function ($scope, loginService, $location) {
-
+        'loginService', '$location', 'userService', function ($scope, 
+        loginService, $location, userService) {            
+    
+            /**
+             * Update when auth state changes.
+             */
             loginService.$onAuth(function (authData) {
                 $scope.authData = authData;
                 if (!authData) {
+                    /*
+                     * No longer authorized, logout.
+                     */
                     $location.path("/login");
+                } else {                
+                    /*
+                     * Set the user's name if known, otherwise use the login
+                     * email address.
+                     */
+                    userService(authData.uid).$loaded().then(function(data) {
+                        $scope.username = data.$value;
+                        if (!$scope.username) {
+                            $scope.username = authData.password.email;
+                        }
+                    });                    
                 }
             });
 
