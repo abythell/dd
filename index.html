@@ -6,34 +6,16 @@
         <link rel="shortcut icon" href="" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" />        
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.4/ui-bootstrap-tpls.js"></script>
         <script src="https://cdn.firebase.com/js/client/2.2.1/firebase.js"></script>
         <script src="https://cdn.firebase.com/libs/angularfire/1.0.0/angularfire.min.js"></script>
+        
     </head>
 
-    <body ng-controller="DdController as dd">
+    <body ng-controller="DdController as dd">    
 
-        <div class="container">
-
-            <div class="row">                
-                <ab-date class="pull-right"></ab-date>
-            </div>            
-
-            <div class="row">
-                <ab-alert></ab-alert>                
-            </div>
-
-            <div class="row">
-                <tabset>                    
-                    <tab class="btn-lg" heading="Mood"><ab-moods></ab-moods></tab>
-                    <tab class="btn-lg" heading="Notes"><ab-notes></ab-notes></tab>                    
-                    <tab class="btn-lg" heading="Medications">Content Goes Here</tab>
-                    <tab class="btn-lg" heading="Supplies">Content Goes Here</tab>                    
-                    <tab class="btn-lg" heading="Summary"><ab-summary></ab-summary></tab
-                </tabset>
-            </div>
-
-        </div>
+        <div ng-view></div>
 
         <!-- TODO: minifiy and combine all these -->
         <script type="text/javascript" src="app/app.module.js"></script>                
@@ -54,6 +36,10 @@
         <script type="text/javascript" src="app/components/mood/moodDirective.js"></script>        
         <script type="text/javascript" src="app/components/mood/moodController.js"></script>        
         <script type="text/javascript" src="app/components/mood/moodService.js"></script>        
+
+        <script type="text/javascript" src="app/components/login/loginDirective.js"></script>        
+        <script type="text/javascript" src="app/components/login/loginController.js"></script>        
+        <script type="text/javascript" src="app/components/login/loginService.js"></script>        
 
 
     </body>

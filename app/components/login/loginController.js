@@ -1,0 +1,101 @@
+(function () {
+
+    angular.module('loginModule').controller('LoginController', ['$location',
+        'loginService', '$scope', function ($location, loginService, $scope) {
+
+            this.email = '';
+            this.password = '';
+
+            this.login = function () {
+                $scope.error = null;
+
+                var credentials = {
+                    email: this.email,
+                    password: this.password
+                };
+
+                loginService.$authWithPassword(credentials).then(
+                        function (authData) {
+                            if (authData.password.isTemporaryPassword) {
+                                $location.path("/reset");
+                            } else {
+                                $location.path("/view");
+                            }
+                        }).catch(function (error) {
+                    $scope.error = error.message;
+                });
+            };
+
+            this.clear = function () {
+                this.email = '';
+                this.password = '';
+                $scope.error = null;
+                $scope.success = null;
+            };
+
+            this.resetPassword = function () {
+                $scope.error = null;
+                $scope.success = null;
+
+                var credentials = {
+                    email: this.email
+                };
+
+                loginService.$resetPassword(credentials).then(function () {
+                    $scope.success = "Password reset sent to " + credentials.email;
+                }).catch(function (error) {
+                    $scope.error = "Reset failed: " + error.message;
+                });
+            };
+
+        }]);
+
+    angular.module('loginModule').controller('LoginButtonController', ['$scope',
+        'loginService', '$location', function ($scope, loginService, $location) {
+
+            loginService.$onAuth(function (authData) {
+                $scope.authData = authData;
+                if (!authData) {
+                    $location.path("/login");
+                }
+            });
+
+            $scope.signout = function () {
+                loginService.$unauth();
+                $location.path("/login");
+            };
+
+
+        }]);
+
+    angular.module('loginModule').controller('LoginResetController', ['$scope',
+        'loginService', '$location', function ($scope, loginService, $location) {
+
+            $scope.changePassword = function () {
+                
+                if ($scope.new1 !== $scope.new2) {
+                    $scope.error = "New passwords don't match";
+                    return;
+                }
+
+                var credentials = {
+                    email: $scope.email,
+                    oldPassword: $scope.old,
+                    newPassword: $scope.new1
+                };
+
+                loginService.$changePassword(credentials).then(function () {
+                    $location.path("/view");
+                }).catch(function (error) {
+                    $scope.error = error.message;
+                });
+
+            };
+            
+            $scope.cancel = function () {
+                $location.path("/view");
+            };
+
+        }]);
+
+})();

@@ -1,65 +1,58 @@
-(function() {
+(function () {
     /*     
      * Declare Angular Modules
-     */    
+     */
     angular.module('dateModule', []);
-    angular.module('summaryModule', []);    
+    angular.module('summaryModule', []);
     angular.module('alertModule', []);
     angular.module('notesModule', []);
     angular.module('moodModule', []);
-    
-    var app = angular.module('appDD', ['dateModule', 
-        'summaryModule', 
-        'alertModule', 
+    angular.module('loginModule', []);
+    var app = angular.module('appDD', ['dateModule',
+        'summaryModule',
+        'alertModule',
         'notesModule',
         'moodModule',
         'ui.bootstrap',
-        'firebase'
+        'firebase',
+        'loginModule',
+        'ngRoute'
     ]);
-   
-   /*
-    * Some sample data to show for now
-    */
-   var notes = [
-        {
-            who:"Joni",
-            what:"Having a great day.",
-            when:1388123412323
-        },
-        {
-            who:"Trevor",
-            what:"Best. Day. Ever.",
-            when:1488123400000
-        }
-    ];
-   
-    /*
-     * Primary Controller
-     */    
-    app.controller('DdController', function() {
-        
-        /*
-         * For now, initialize the nodes with sample data until
-         * we can pull real data from a data store
-         */        
-        this.notes = notes;
-                        
-    });
-    
-    /**
-     * Handle adding new notes via form.
-     */
-    app.controller('NoteController', ['dateService', function(date) {
-       this.note = {};
-       this.date = date;              
-       this.addNote = function(dd) {
-           this.note.when = Date.now();
-           dd.notes.push(this.note);
-           this.note = {};
-       };
-       
-    }]);            
-    
+    app.controller('DdController', ['$rootScope', function ($rootScope) {
+            $rootScope.firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+        }]);
+    app.run(["$rootScope", "$location", function ($rootScope, $location) {
+            $rootScope.$on("$routeChangeError", function (event, next, previous, error) {
+                if (error === "AUTH_REQUIRED") {
+                    $location.path("/login");
+                }
+            });
+        }]);
+    app.config(['$routeProvider', function ($routeProvider) {
+            $routeProvider.
+                    when('/view', {
+                        templateUrl: 'app/partials/view.html',
+                        resolve: {
+                            "currentAuth": ["loginService", function (loginService) {
+                                    return loginService.$requireAuth();
+                                }]
+                        }
+                    }).
+                    when('/login', {
+                        templateUrl: 'app/partials/login.html'
+                    }).
+                    when('/reset', {
+                        templateUrl: 'app/partials/reset.html',
+                        resolve: {
+                            "currentAuth": ["loginService", function (loginService) {
+                                    return loginService.$requireAuth();
+                                }]
+                        }
+                    }).
+                    otherwise({
+                        redirectTo: '/view'
+                    });
+        }]);
 })();
 
 
