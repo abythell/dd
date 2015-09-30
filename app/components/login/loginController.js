@@ -69,12 +69,12 @@
                     /*
                      * Set the user's name if known, otherwise use the login
                      * email address.
-                     */
-                    userService(authData.uid).$loaded().then(function(data) {
+                     */                                        
+                    userService.getUser(authData.uid).$loaded().then(function(data) {
                         $scope.username = data.$value;
                         if (!$scope.username) {
                             $scope.username = authData.password.email;
-                        }
+                        }                        
                     });                    
                 }
             });
