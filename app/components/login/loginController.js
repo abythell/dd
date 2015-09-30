@@ -73,7 +73,7 @@
                      * email address.
                      */                                        
                     userService.getUser(authData.uid).$loaded().then(function(data) {
-                        $scope.username = data.$value;
+                        $scope.username = data.name;
                         if (!$scope.username) {
                             $scope.username = authData.password.email;
                         }                        

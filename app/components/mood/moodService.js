@@ -42,11 +42,11 @@
             this.moodList = moodList;
            
            /*
-            * Fetch object data from <firebase-url>/yyyy-MM-dd/mood
+            * Fetch object data from <firebase-url>/mood/
             */
             this.getMoods = function(date, tod) {
                 var key = $filter('date')(date, "yyyy-MM-dd");
-                return $firebaseObject(ref.child(key).child('mood' + tod));
+                return $firebaseObject(ref.child('mood').child(key).child(tod));
             };
 
         }]);
