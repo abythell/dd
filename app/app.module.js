@@ -2,17 +2,13 @@
     /*     
      * Declare Angular Modules
      */
-    angular.module('dateModule', []);
-    angular.module('summaryModule', []);
-    angular.module('alertModule', []);
+    angular.module('dateModule', []);    
     angular.module('notesModule', []);
     angular.module('moodModule', []);
     angular.module('loginModule', []);
     angular.module('userModule', []);
     
-    var app = angular.module('appDD', ['dateModule',
-        'summaryModule',
-        'alertModule',
+    var app = angular.module('appDD', ['dateModule',        
         'notesModule',
         'moodModule',
         'ui.bootstrap',

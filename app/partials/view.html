@@ -1,27 +1,37 @@
 <div class="container">
 
     <div class="row"> 
-        <div class="col-sm-8">
-            <ab-date></ab-date>
-        </div>
-        <div class="pull-right">
-            <ab-loginbutton></ab-loginbutton>
-        </div>
-        
+        <h1 class="col-sm-4">The Daily Declan</h1>        
+        <ab-loginbutton class="pull-right"></ab-loginbutton>
     </div>            
 
     <div class="row">
-        <ab-alert></ab-alert>                
+        <alert close="hidden1=true" ng-hide="hidden1">
+            This form has been designed as a means to communicate important information 
+            about Declan, and the events of his day. Please remember when filling it out 
+            that we use your responses to talk to Declan about what has transpired, 
+            because he cannot tell us himself
+        </alert>           
     </div>
-
+    
+    <div class="row">
+        <alert close="hidden2=true" ng-hide="hidden2" type="danger">
+            This appears only if an Admin has set a special message for this day.
+            This feature has not yet been implemented.
+        </alert>
+              
+    </div>
+    
+    <ab-date class="pull-right"></ab-date>        
+    
     <div class="row">
         <tabset>                    
             <tab class="btn-lg" heading="Quick Picks"><ab-moods></ab-moods></tab>
             <tab class="btn-lg" heading="Notes"><ab-notes></ab-notes></tab>                    
             <tab class="btn-lg" heading="Medications">Content Goes Here</tab>
-            <tab class="btn-lg" heading="Supplies">Content Goes Here</tab>                    
-            <tab class="btn-lg" heading="Summary"><ab-summary></ab-summary></tab
+            <tab class="btn-lg" heading="Supplies">Content Goes Here</tab>                                
         </tabset>
+        
     </div>
 
 </div>
