@@ -2,10 +2,10 @@
 <div class="row">    
     <div class="col-sm-3" ng-repeat="moodName in moodCtrl.moodList">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="moodCtrl.moodAM()[moodName]" 
-                ng-class="moodCtrl.moodAM()[moodName] ? 'btn-primary' : ''"
-                ng-change="moodCtrl.saveAM()"
-                ng-disabled="!moodCtrl.editable()">                
+                ng-model="moodAM[moodName]" 
+                ng-class="moodAM[moodName] ? 'btn-primary' : ''"
+                ng-change="moodAM.$save()"
+                ng-disabled="!canEdit">                
             {{moodName}}
         </button>
         <br/>
@@ -16,10 +16,10 @@
 <div class="row">    
     <div class="col-sm-3" ng-repeat="moodName in moodCtrl.moodList">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="moodCtrl.moodPM()[moodName]" 
-                ng-class="moodCtrl.moodPM()[moodName] ? 'btn-primary' : ''"
-                ng-change="moodCtrl.savePM()"
-                ng-disabled="!moodCtrl.editable()">                
+                ng-model="moodPM[moodName]" 
+                ng-class="moodPM[moodName] ? 'btn-primary' : ''"
+                ng-change="moodPM.$save()"
+                ng-disabled="!canEdit">                
             {{moodName}}
         </button>
         <br/>
