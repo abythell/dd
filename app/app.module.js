@@ -18,7 +18,7 @@
         'userModule',
         'ngCookies'
     ]);
-    app.controller('DdController', ['$rootScope', function ($rootScope) {
+    app.controller('DdController', [function() {
 
         }]);
 

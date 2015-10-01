@@ -1,8 +1,7 @@
 (function () {
 
     angular.module('userModule').factory('userService', ['$firebaseObject',
-        '$rootScope', 'loginService', function ($firebaseObject, $rootScope,
-        loginService) {
+        'loginService', function ($firebaseObject, loginService) {
             
             var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
             var ref = new Firebase(firebaseUrl);            
