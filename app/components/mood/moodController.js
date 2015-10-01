@@ -1,7 +1,7 @@
 (function () {
 
     angular.module('moodModule').controller('MoodController', ['moodService',
-        '$rootScope', 'dateService', function (moodService, $rootScope, dateService) {
+        '$rootScope', 'dateService', '$q', function (moodService, $rootScope, dateService, $q) {
             
             this.moodList = moodService.moodList;
             var moodAM = moodService.getMoods(dateService.selectedDate, 'am');

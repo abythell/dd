@@ -4,7 +4,8 @@
         '$rootScope', 'loginService', function ($firebaseObject, $rootScope,
         loginService) {
             
-            var ref = new Firebase($rootScope.firebaseUrl);            
+            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+            var ref = new Firebase(firebaseUrl);            
             
             var userService = {};
             
@@ -29,7 +30,7 @@
                     return null;
                 }
             };
-            
+                                    
             return userService;
                                     
         }]);

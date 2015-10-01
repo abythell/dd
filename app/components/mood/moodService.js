@@ -1,12 +1,12 @@
 (function () {
     angular.module('moodModule').service('moodService', ['$firebaseObject', 
-        '$filter', '$rootScope', function ($firebaseObject, $filter, $rootScope) {
+        '$filter', function ($firebaseObject, $filter) {
 
             /*
              * URL of firebase app
-             */
-            //var ref = new Firebase('https://brilliant-inferno-6689.firebaseio.com');
-            var ref = new Firebase($rootScope.firebaseUrl);
+             */            
+            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+            var ref = new Firebase(firebaseUrl);
 
             /*
              * List all 'moods' here.  You can add new ones as needed, but

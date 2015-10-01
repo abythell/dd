@@ -2,13 +2,13 @@
     /*     
      * Declare Angular Modules
      */
-    angular.module('dateModule', []);    
+    angular.module('dateModule', []);
     angular.module('notesModule', []);
     angular.module('moodModule', []);
     angular.module('loginModule', []);
     angular.module('userModule', []);
-    
-    var app = angular.module('appDD', ['dateModule',        
+
+    var app = angular.module('appDD', ['dateModule',
         'notesModule',
         'moodModule',
         'ui.bootstrap',
@@ -19,16 +19,22 @@
         'ngCookies'
     ]);
     app.controller('DdController', ['$rootScope', function ($rootScope) {
-            $rootScope.firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+
         }]);
-    app.run(["$rootScope", "$location", function ($rootScope, $location) {
+
+    app.run(["$rootScope", "$location", function ($rootScope,
+                $location) {
             $rootScope.$on("$routeChangeError", function (event, next, previous, error) {
                 if (error === "AUTH_REQUIRED") {
                     $location.path("/login");
+                } else if (error === "ADMIN_REQUIRED") {
+                    $location.path("/view");
                 }
             });
         }]);
+    
     app.config(['$routeProvider', function ($routeProvider) {
+
             $routeProvider.
                     when('/view', {
                         templateUrl: 'app/partials/view.html',
@@ -48,6 +54,26 @@
                                     return loginService.$requireAuth();
                                 }]
                         }
+                    }).
+                    when('/admin', {
+                        templateUrl: 'app/partials/admin.html',
+                        resolve: {
+                            "currentAuth": ["loginService", function (loginService) {
+                                    return loginService.$requireAuth();
+                                }],
+                            "isAdmin": ["userService", "$q", function(userService, $q) {
+                                    var deferred = $q.defer();                                    
+                                    userService.getCurrentUser().$loaded().then(function(data) {
+                                        if (data.admin) {
+                                            deferred.resolve();
+                                        } else {
+                                            deferred.reject("ADMIN_REQUIRED");
+                                        }
+                                    });                                    
+                                    return deferred.promise;
+                            }]
+                        },
+                        admin: true
                     }).
                     otherwise({
                         redirectTo: '/view'

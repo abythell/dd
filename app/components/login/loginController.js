@@ -71,13 +71,14 @@
                     /*
                      * Set the user's name if known, otherwise use the login
                      * email address.
-                     */                                        
+                     */                                                                                        
                     userService.getUser(authData.uid).$loaded().then(function(data) {
                         $scope.username = data.name;
+                        $scope.isAdmin = data.admin;
                         if (!$scope.username) {
-                            $scope.username = authData.password.email;
-                        }                        
-                    });                    
+                            $scope.username = authData.password.email;                            
+                        }                                                
+                    });                     
                 }
             });
 
