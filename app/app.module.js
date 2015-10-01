@@ -7,6 +7,7 @@
     angular.module('moodModule', []);
     angular.module('loginModule', []);
     angular.module('userModule', []);
+    angular.module('suppliesModule', []);
 
     var app = angular.module('appDD', ['dateModule',
         'notesModule',
@@ -16,7 +17,8 @@
         'loginModule',
         'ngRoute',
         'userModule',
-        'ngCookies'
+        'ngCookies',
+        'suppliesModule'
     ]);
     app.controller('DdController', [function() {
 
