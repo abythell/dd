@@ -1,6 +1,5 @@
 (function () {
-    angular.module('dateModule').service('dateService', ['$rootScope', 
-        function($rootScope) {
+    angular.module('dateModule').service('dateService', [function() {
 
         var date = {};
 
@@ -13,8 +12,7 @@
         };
 
         date.addDays = function (i) {
-            date.selectedDate.setDate(date.selectedDate.getDate() + i);     
-            $rootScope.$emit('dateChangeEvent', date.selectedDate);
+            date.selectedDate.setDate(date.selectedDate.getDate() + i);            
         };
 
         return date;
