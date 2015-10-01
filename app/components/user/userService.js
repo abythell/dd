@@ -30,6 +30,17 @@
                     return null;
                 }
             };
+            
+            /**
+             * Get the current user's admin status.  
+             * @returns A promise resolved with a boolean admin status.
+             */
+            userService.isCurrentUserAdmin = function() {
+                var user = userService.getCurrentUser();
+                return user.$loaded().then(function(data) {
+                    return data.admin;
+                });
+            };
                                     
             return userService;
                                     
