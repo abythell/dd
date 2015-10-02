@@ -1,12 +1,28 @@
 <div class="row">    
-    <div class="col-sm-3" ng-repeat="item in items">                        
+    <div class="col-sm-3" ng-repeat="item in singleItems">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="item.selected" 
-                ng-class="item.qty ? 'btn-primary' : ''"
-                ng-change="buttonChanged(item.$id)"
+                ng-model="supplies[item]" 
+                ng-class="supplies[item] ? 'btn-primary' : ''"
+                ng-change="supplies.$save()"
                 ng-disabled="!canEdit">                
-            {{item.label}}
+            {{item}}
         </button>
         <br/>
     </div>
 </div>
+
+<form class="form-horizontal">
+
+    <div class="form-group">
+        <div ng-repeat="item in multiItems" class="col-sm-3">  
+            <label for="{{item}}" class="control-label sr-only">{{item}}</label>
+
+            <div class="input-group">
+                <div class="input-group-addon" ng-class="supplies[item] > 0 ? 'primary':''">{{item}}</div>
+                <input type="range" class="form-control" id="{{item}}}" min="0" 
+                       max="5" ng-model="supplies[item]" ng-change="supplies.$save()">
+                <div class="input-group-addon">{{supplies[item]}}</div>
+            </div>
+        </div>
+    </div>
+</form>
