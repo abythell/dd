@@ -15,11 +15,11 @@
              */
             var supplies = [
                 {name: 'Diapers', max: 5},
-                {name: '10cc Syringe', max: 5},
-                {name: '20cc Syringe', max: 5},
-                {name: '60cc Syringe', max: 5},
-                {name: 'Feeding Tube', max: 5},
-                {name: 'Venting Tube', max: 5},
+                {name: 'Medicine Syringe 10cc', max: 5},
+                {name: 'Flushing Syringe 20cc', max: 5},
+                {name: 'Venting Syringe 60cc', max: 5},
+                {name: 'Feeding Tube (thin, bent)', max: 5},
+                {name: 'Venting Tube (thick, straight)', max: 5},
                 {name: 'Duocal', max: 5},
                 {name: 'Baclofen', max: 5},
                 {name: 'Pill Crusher', max: 5},
