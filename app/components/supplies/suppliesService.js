@@ -9,8 +9,9 @@
             var ref = new Firebase(firebaseUrl);
 
             /*
-             * List all 'supplies' here.  You can add new ones as needed, but
-             * removing or renaming supplies will affect historical data.
+             * List supplies here.  You can add new ones as needed, but
+             * removing or renaming supplies will affect historical data.  These
+             * will be shown as a simple button (selected or unselected).
              */
             this.singleItemsList = [
                 'Diapers',
@@ -25,6 +26,11 @@
                 'Bottle (mix meds)'
             ];
             
+            /*
+             * List supplies that have specific quantities here.  These will
+             * be shown with a slider allowing the user to select a value
+             * between 1 and 5.
+             */
             this.multiItemsList  = [
                 'Food',
                 'Syringe Tips'
