@@ -22,8 +22,13 @@
         'suppliesModule',
         'alertModule'
     ]);
-    app.controller('DdController', [function() {
-
+    app.controller('DdController', ['$scope', '$modal', function ($scope, $modal) {
+            $scope.uhfOpen = function () {
+                $scope.uhfModal = $modal.open({
+                    animation: true,
+                    templateUrl: 'uhfModalContent.html',
+                });
+            };
         }]);
 
     app.run(["$rootScope", "$location", function ($rootScope,
@@ -36,7 +41,7 @@
                 }
             });
         }]);
-    
+
     app.config(['$routeProvider', function ($routeProvider) {
 
             $routeProvider.
@@ -65,17 +70,17 @@
                             "currentAuth": ["loginService", function (loginService) {
                                     return loginService.$requireAuth();
                                 }],
-                            "isAdmin": ["userService", "$q", function(userService, $q) {
-                                    var deferred = $q.defer();                                    
-                                    userService.getCurrentUser().$loaded().then(function(data) {
+                            "isAdmin": ["userService", "$q", function (userService, $q) {
+                                    var deferred = $q.defer();
+                                    userService.getCurrentUser().$loaded().then(function (data) {
                                         if (data.admin) {
                                             deferred.resolve();
                                         } else {
                                             deferred.reject("ADMIN_REQUIRED");
                                         }
-                                    });                                    
+                                    });
                                     return deferred.promise;
-                            }]
+                                }]
                         },
                         admin: true
                     }).
