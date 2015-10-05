@@ -6,27 +6,25 @@
     </div>            
 
     <div class="row">
-        <alert close="hidden1=true" ng-hide="hidden1">
+        <div class="alert alert-warning alert-dismissable" ng-hide="hidden">
+            <button type="button" class="close" ng-click="hidden = true" data-dismiss="alert" 
+                    aria-hidden="true">&times;</button>
             This form has been designed as a means to communicate important information 
             about Declan, and the events of his day. Please remember when filling it out 
             that we use your responses to talk to Declan about what has transpired, 
             because he cannot tell us himself
-        </alert>           
-    </div>
-    
+        </div>
+    </div>  
+
     <div class="row">
-        <alert close="hidden2=true" ng-hide="hidden2" type="danger">
-            This appears only if an Admin has set a special message for this day.
-            This feature has not yet been implemented.
-        </alert>
-              
+        <ab-alert></ab-alert>
     </div>
-    
-    
+
+
     <div class="row">
         <ab-date class="pull-right"></ab-date>
     </div>
-    
+
     <div class="row">
         <tabset>                    
             <tab class="btn-lg" heading="Quick Picks"><ab-moods></ab-moods></tab>
@@ -34,7 +32,7 @@
             <tab class="btn-lg" heading="Seizure">Content Goes Here</tab>
             <tab class="btn-lg" heading="Supplies"><ab-supplies></ab-supplies></tab>                                
         </tabset>
-        
+
     </div>
 
 </div>

@@ -8,6 +8,7 @@
     angular.module('loginModule', []);
     angular.module('userModule', []);
     angular.module('suppliesModule', []);
+    angular.module('alertModule', []);
 
     var app = angular.module('appDD', ['dateModule',
         'notesModule',
@@ -18,7 +19,8 @@
         'ngRoute',
         'userModule',
         'ngCookies',
-        'suppliesModule'
+        'suppliesModule',
+        'alertModule'
     ]);
     app.controller('DdController', [function() {
 

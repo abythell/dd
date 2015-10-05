@@ -1,0 +1,18 @@
+<div class="alert alert-danger alert-dismissable" ng-hide="alertCtrl.hidden">
+
+    <button type="button" class="close" ng-click="alertCtrl.click()" data-dismiss="alert" 
+            aria-hidden="true">&times;</button>
+    <span class="glyphicon glyphicon-info-sign"></span> 
+    {{alert.$value}}
+    <button type="button" ng-show="canEdit">Edit</button>
+</div>
+
+<div>
+<p>
+    <button popover-placement="bottom" popover-template="calendar.html" class="btn btn-default">Date Picker</button>
+  </p>
+  
+  <script id="calendar.html" type="text/ng-template">
+    <div>Hello</div>
+  </script>
+</div>
