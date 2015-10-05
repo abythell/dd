@@ -1,18 +1,20 @@
-<div class="alert alert-danger alert-dismissable" ng-hide="alertCtrl.hidden">
+<div class="alert alert-dismissable" ng-hide="alertCtrl.hidden" ng-class="alertClass">
+    
+    <div id="alertView" ng-hide="alertCtrl.editMode">
+        <button class="close" ng-click="alertCtrl.hidden=true" data-dismiss="alert" 
+                aria-hidden="true">&times;</button>        
+        <div ng-click="alertCtrl.edit()">{{alert.$value}}</div>      
+    </div>
 
-    <button type="button" class="close" ng-click="alertCtrl.click()" data-dismiss="alert" 
-            aria-hidden="true">&times;</button>
-    <span class="glyphicon glyphicon-info-sign"></span> 
-    {{alert.$value}}
-    <button type="button" ng-show="canEdit">Edit</button>
-</div>
+    <form name="alertForm" ng-submit="alertCtrl.save()" ng-show="alertCtrl.editMode">              
+        <div class="form-group">                
+            <textarea class="form-control" ng-model="alert.$value">
+                    {{alert.$value}}
+            </textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="button" class="btn btn-default" ng-click="alertCtrl.reset()">Reset</button>
+        <button type="button" class="btn btn-default" ng-click="alertCtrl.editMode = false">Cancel</button>
+    </form>
 
-<div>
-<p>
-    <button popover-placement="bottom" popover-template="calendar.html" class="btn btn-default">Date Picker</button>
-  </p>
-  
-  <script id="calendar.html" type="text/ng-template">
-    <div>Hello</div>
-  </script>
 </div>
