@@ -29,6 +29,10 @@
              */
             this.edit = function () {
                 if ($scope.canEdit) {
+                    if ($scope.alert.$value === defaultMessage) {
+                        this.previousMessage = defaultMessage;
+                        $scope.alert.$value = '';
+                    }
                     this.editMode = true;
                 }
             };
@@ -42,7 +46,21 @@
                 if ($scope.alert.$value.length > 0) {
                     $scope.alert.$save();
                     $scope.alertClass = "alert-danger";
+                } else {
+                    $scope.alert.$value = defaultMessage;
                 }
+            };
+                                    
+            this.cancel = function() {
+                this.editMode = false;
+                if (this.previousMessage) {
+                    $scope.alert.$value = this.previousMessage;
+                }
+            };
+            
+            this.clear = function() {
+                this.previousMessage = $scope.alert.$value;
+                $scope.alert.$value = '';
             };
 
             /*
