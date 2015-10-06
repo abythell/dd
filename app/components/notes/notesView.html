@@ -1,24 +1,28 @@
-<div class="row col-sm-12">
-    <ul class="list-group">
-        <li class="list-group-item" ng-repeat="note in notesCtrl.getNotes()| orderBy:'when'">                
-            <strong>{{note.who}}:&nbsp;</strong>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="note in notes| orderBy:'when'">                        
+        <div class="list-group-item-text">
+            <em>
+                {{note.who}}, {{note.when| date:'h:mma'}}&nbsp-&nbsp;
+            </em>
             {{note.what}}
-            <em class="pull-right">{{note.when| date:'h:mma'}}</em>                 
-        </li>
-    </ul>    
-</div>
+            <button type="button" class="btn badge pull-right" ng-show="canEdit && note.uuid === uuid"
+                    ng-click="notes.$remove(note)">
+                <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+            </button>            
+        </div>
 
-<form name="noteForm" class="form-inline row col-sm-12" ng-submit="noteForm.$valid && notesCtrl.addNote()" 
-      novalidate ng-show="notesCtrl.isToday()">                  
-    <div class="input-group col-sm-2">
-        <label for="inputWho" class="sr-only">Who</label>                 
-        <input type="text" class="form-control" id="inputWho" ng-model="notesCtrl.note.who" placeholder="Who are you?" required/>
-    </div>
-    <div class="input-group col-sm-9">                
+    </li>
+</ul>    
+
+<form name="noteForm" ng-submit="noteForm.$valid && notesCtrl.addNote(what)" 
+      novalidate ng-show="canEdit">                  
+
+    <div class="form-group">                
         <label for="inputWhat" class="sr-only">What</label>                     
-        <input type="text" class="form-control" id="inputWhat" ng-model="notesCtrl.note.what" placeholder="What do you have to add?" required/>
+        <textarea class="form-control" id="inputWhat" ng-model="what" placeholder="What do you have to add?" required>
+        </textarea>
     </div>
-    <div class="input-group">                
-        <button type="submit" class="btn btn-primary" ng-disabled="!noteForm.$valid">Add</button>
+    <div class="form-group">                
+        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!noteForm.$valid">Add</button>
     </div>           
 </form>        

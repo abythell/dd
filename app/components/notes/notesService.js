@@ -1,28 +1,18 @@
-(function () {
-    angular.module('notesModule').service('notesService', function () {
-        
-        //TODO: load and save notes to a data store
-        var notes = [
-            {
-                who: "Joni",
-                what: "Having a great day.",
-                when: 1388123412323
-            },
-            {
-                who: "Trevor",
-                what: "Best. Day. Ever.",
-                when: 1488123400000
-            }
-        ];
-        
-        this.getNotes = function() {
-            return notes;
-        };
-        
-        this.addNote = function(note) {           
-           notes.push(note);           
-        };
+(function () {   
+    angular.module('notesModule').service('notesService', ['$firebaseArray',
+            '$filter', function ($firebaseArray, $filter) {
 
-    });
+                /*
+                 * URL of firebase app
+                 */
+                var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+                var ref = new Firebase(firebaseUrl);
+
+                this.getNotes = function (date) {
+                    var key = $filter('date')(date, "yyyy-MM-dd");
+                    return $firebaseArray(ref.child('notes').child(key));
+                };
+
+            }]);
 
 })();
