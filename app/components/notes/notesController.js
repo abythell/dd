@@ -20,8 +20,7 @@
             var getNotes = function () {
                 userService.getCurrentUser().$loaded().then(function (user) {
                     $scope.uuid = user.$id;
-                }).then(function () {
-                    $scope.notes = notesService.getNotes(dateService.selectedDate);
+                    $scope.notes = notesService.getNotes(dateService.selectedDate);                
                 });
             };
 
