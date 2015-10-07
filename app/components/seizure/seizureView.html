@@ -1,0 +1,41 @@
+<form name="activityForm" ng-submit="activityForm.$valid && seizureCtrl.addActivity()" 
+      novalidate ng-show="canEdit">                  
+
+    <div class="table-responsive">
+        <table class="table">
+            <tr>
+                <th>Name</th>
+                <th>Start Time</th>
+                <th>Duration (mm:ss)</th>
+                <th>Comments</th>
+                <th>&nbsp;</th>
+            </tr>
+            <tr ng-repeat="event in activity| orderBy: 'when'">
+                <td>{{event.who}}</td>
+                <td>{{event.start}}</td>
+                <td>{{event.duration}}</td>
+                <td>{{event.notes}}</td>
+                <td> 
+                    <button type="button" class="btn badge pull-right" 
+                            ng-show="canEdit && event.uuid === uuid"
+                            ng-click="activity.$remove(event)">
+                        <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                    </button>            </td>
+            </tr>
+            <!-- TODO: move this form out of the table -->
+            <tr>
+                <td>&nbsp;</td>
+                <td><timepicker ng-model="start"></timepicker></td>
+            <td>
+                <div class="input-group">
+                    <div class="input-group-addon">{{seizureCtrl.getDuration()}}</div>
+                    <input type="range" class="form-control" ng-model="duration" 
+                           min="0" max="600" step="10"/>
+                </div>
+            </td>
+            <td><textarea ng-model="notes" placeholder="Optional notes"></textarea></td>
+            <td><button type="submit" class="btn btn-primary pull-right">Add</button>
+                </tr>
+        </table>
+    </div>
+</form>

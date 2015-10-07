@@ -24,7 +24,7 @@
                     $scope.notes = notesService.getNotes(dateService.selectedDate);
                 });
             };
-                                   
+
             this.addNote = function (what) {
                 userService.getCurrentUser().$loaded().then(function (user) {
                     var date = new Date().getTime();
@@ -37,7 +37,7 @@
                     $scope.notes.$add(newNote);
                     $scope.what = '';
                 });
-            };                        
+            };
 
             /*
              * Fetch new data when the date changes - this includes the 
@@ -47,7 +47,7 @@
                 return dateService.selectedDate;
             }, function () {
                 getNotes();
-                setEditable();            
+                setEditable();
             }, true);
         }]);
 

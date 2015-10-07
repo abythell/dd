@@ -9,6 +9,7 @@
     angular.module('userModule', []);
     angular.module('suppliesModule', []);
     angular.module('alertModule', []);
+    angular.module('seizureModule', []);
 
     var app = angular.module('appDD', ['dateModule',
         'notesModule',
@@ -20,7 +21,8 @@
         'userModule',
         'ngCookies',
         'suppliesModule',
-        'alertModule'
+        'alertModule',
+        'seizureModule'
     ]);
     app.controller('DdController', ['$scope', '$modal', function ($scope, $modal) {
             $scope.uhfOpen = function () {
