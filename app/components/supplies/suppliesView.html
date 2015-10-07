@@ -12,24 +12,28 @@
         <br/>
     </div>
     <div class="col-sm-4">
-    <button type="button" class="btn btn-block" ng-model="uhf" btn-checkbox ng-click="uhfOpen()">UHF</button>
+        <button type="button" class="btn btn-block" ng-model="uhf" btn-checkbox 
+                ng-click="uhfOpen()" ng-disabled="!canEdit">UHF</button>
     </div>
 </div>
 
 <h2>Other Supplies</h2>
 
 <div class="row">
-<div ng-repeat="item in multiItems" class="col-lg-6">          
+    <div ng-repeat="item in multiItems" class="col-lg-6">          
         <div class="input-group">
 
-            <div class="input-group-addon" 
-                 ng-class="supplies[item] > 0 ? 'primary':''">{{item}}</div>
+            <div class="input-group-addon btn" 
+                 ng-class="{'primary': supplies[item] > 0, 'disabled': !canEdit}">
+                {{item}}                 
+            </div>
 
             <input type="range" class="form-control" id="{{item}}}" min="0" 
-                   max="5" ng-model="supplies[item]" ng-change="supplies.$save()">
+                   max="5" ng-model="supplies[item]" ng-change="supplies.$save()"
+                   ng-disabled="!canEdit">
 
             <div class="input-group-addon">{{supplies[item]}}</div>
         </div>
-    <br/>
+        <br/>
     </div>
 </div>
