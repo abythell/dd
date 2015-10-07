@@ -3,19 +3,7 @@
     angular.module('seizureModule').controller('SeizureController', ['dateService',
         '$scope', 'userService', 'seizureService', '$filter', function (dateService, $scope,
                 userService, seizureService, $filter) {
-
-            /*
-             * Convert seconds into mm:ss.  There are likely directives
-             * and modules that can do this for us, but this is simple
-             * enough not to warrant additional dependencies.
-             */
-            this.getDuration = function (ticks) {
-                var min = Math.round(ticks / 60);
-                var seconds = ticks % 60;
-                var date = new Date(0, 0, 0, 0, min, seconds);
-                return $filter('date')(date, 'mm:ss');
-            };
-
+            
             /*
              * Determine if the seizure for this day can be changed or not. 
              * Admins can add activity any day, but other users can only add
