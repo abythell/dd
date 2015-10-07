@@ -1,6 +1,6 @@
 <h2>General Notes</h2>
 <ul class="list-group">
-    <li class="list-group-item" ng-repeat="note in notes| orderBy:'when'">                        
+    <li class="list-group-item" ng-repeat="note in notes track by $index | orderBy:'when'">                        
         <div class="list-group-item-text">
             <em>
                 {{note.who}}, {{note.when| date:'hh:mm a'}}&nbsp-&nbsp;
