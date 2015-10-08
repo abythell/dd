@@ -1,8 +1,8 @@
 (function () {
 
     angular.module('seizureModule').controller('SeizureController', ['dateService',
-        '$scope', 'userService', 'seizureService', '$filter', function (dateService, $scope,
-                userService, seizureService, $filter) {
+        '$scope', 'userService', 'seizureService', function (dateService, $scope,
+                userService, seizureService) {
             
             /*
              * Determine if the seizure for this day can be changed or not. 
