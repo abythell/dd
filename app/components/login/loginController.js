@@ -73,11 +73,15 @@
                      * email address.
                      */                                                                                        
                     userService.getUser(authData.uid).$loaded().then(function(data) {
-                        $scope.username = data.name;
-                        $scope.isAdmin = data.admin;
-                        if (!$scope.username) {
-                            $scope.username = authData.password.email;                            
-                        }                                                
+                        if (!data.active) {
+                            $scope.signout();
+                        } else {
+                            $scope.username = data.name;
+                            $scope.isAdmin = data.admin;
+                            if (!$scope.username) {
+                                $scope.username = authData.password.email;                            
+                            }                                                
+                        }
                     });                     
                 }
             });
