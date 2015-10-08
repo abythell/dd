@@ -1,0 +1,53 @@
+<h2>Single-item Supplies</h2>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="item in singleItems">                        
+        <div class="list-group-item-text">
+            {{item.$value}}
+            <span class="glyphicon glyphicon-remove pull-right text-danger"
+                  ng-click="singleItems.$remove(item)"></span>
+        </div>        
+    </li>
+</ul>    
+
+<form name="singleForm" ng-submit="singleForm.$valid && singleItems.$add(singleItem); singleItem=''" 
+      novalidate class="form-inline"> 
+
+    <div class="form-group">
+        <label class="control-label sr-only" >Name</label>
+        <input type="text" class="form-control" ng-model="singleItem" 
+               placeholder="New Supply Name" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary" 
+            ng-enabled="singleItem" ng-disabled="singleForm.$invalid">
+        Add
+    </button>
+
+</form>
+<hr/>
+<h2>Multi-item Supplies</h2>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="multi in multiItems">                        
+        <div class="list-group-item-text">
+            {{multi.$value}}
+            <span class="glyphicon glyphicon-remove pull-right text-danger"
+                  ng-click="multiItems.$remove(multi)"></span>
+        </div>        
+    </li>
+</ul>    
+
+<form name="multiForm" ng-submit="multiForm.$valid && multiItems.$add(multiItem); multiItem=''" 
+      novalidate class="form-inline"> 
+
+    <div class="form-group">
+        <label class="control-label sr-only" >Name</label>
+        <input type="text" class="form-control" ng-model="multiItem" 
+               placeholder="New Supply Name" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary" 
+            ng-enabled="multiItem" ng-disabled="multiForm.$invalid">
+        Add
+    </button>
+
+</form>

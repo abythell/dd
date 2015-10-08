@@ -3,11 +3,11 @@
 
     <div class="col-sm-4" ng-repeat="item in singleItems">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="supplies[item]" 
-                ng-class="supplies[item] ? 'btn-primary' : ''"
+                ng-model="supplies[item.$value]" 
+                ng-class="supplies[item.$value] ? 'btn-primary' : ''"
                 ng-change="supplies.$save()"
                 ng-disabled="!canEdit">                
-            {{item}}
+            {{item.$value}}
         </button>
         <br/>
     </div>
@@ -24,15 +24,15 @@
         <div class="input-group">
 
             <div class="input-group-addon btn" 
-                 ng-class="{'primary': supplies[item] > 0, 'disabled': !canEdit}">
-                {{item}}                 
+                 ng-class="{'primary': supplies[item.$value] > 0, 'disabled': !canEdit}">
+                {{item.$value}}                 
             </div>
 
-            <input type="range" class="form-control" id="{{item}}}" min="0" 
-                   max="10" ng-model="supplies[item]" ng-change="supplies.$save()"
+            <input type="range" class="form-control" min="0" 
+                   max="10" ng-model="supplies[item.$value]" ng-change="supplies.$save()"
                    ng-disabled="!canEdit">
 
-            <div class="input-group-addon">{{supplies[item]}}</div>
+            <div class="input-group-addon">{{supplies[item.$value]}}</div>
         </div>
         <br/>
     </div>

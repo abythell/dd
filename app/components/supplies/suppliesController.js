@@ -4,8 +4,14 @@
         'dateService', '$scope', 'userService', function (suppliesService,
                 dateService, $scope, userService) {
 
-            $scope.singleItems = suppliesService.singleItemsList;
-            $scope.multiItems = suppliesService.multiItemsList;
+
+            suppliesService.getSingleItemList().$loaded().then(function (items) {
+                $scope.singleItems = items;
+            });
+            
+            suppliesService.getMultiItemList().$loaded().then(function (items) {
+                $scope.multiItems = items;
+            });
 
             /*
              * Determine if the supplies for this day can be changed or not.             
@@ -25,8 +31,8 @@
                 obj.$loaded().then(function () {
                     $scope.supplies = obj;
                     for (var i=0; i< $scope.multiItems.length; i++) {
-                        $scope.supplies[$scope.multiItems[i]] = 
-                                $scope.supplies[$scope.multiItems[i]] || 0;
+                        $scope.supplies[$scope.multiItems[i].$value] = 
+                                $scope.supplies[$scope.multiItems[i].$value] || 0;
                     }
                 });
             };
