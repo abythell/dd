@@ -30,6 +30,10 @@
                 }
             };
             
+            userService.getAllUsers = function() {
+                return $firebaseObject(ref.child('users'));
+            };
+            
             /**
              * Get the current user's admin status.  
              * @returns A promise resolved with a boolean admin status.

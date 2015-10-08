@@ -1,10 +1,18 @@
-   <div class="row">
-        <div class="col-md-6">
-            <p class="input-group">
-              <input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-              <span class="input-group-btn">
-                <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-              </span>
-            </p>
-        </div>
+<div class="container">
+
+    <div class="row"> 
+        <h1 class="col-sm-6">Daily Declan Configuration</h1>        
+        <ab-loginbutton class="pull-right"></ab-loginbutton>
+    </div>            
+
+    <div class="row">
+        <tabset>                    
+            <tab class="btn-lg" heading="Users"><ab-users></ab-users></tab>
+            <tab class="btn-lg" heading="Lists"></tab>                    
+            <tab class="btn-lg" heading="Reports"></tab>                        
+        </tabset>
+
     </div>
+
+</div>
+
