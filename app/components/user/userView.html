@@ -1,19 +1,43 @@
+<a href="https://brilliant-inferno-6689.firebaseio.com/" class="btn btn-default pull-right">
+    Firebase Dashboard
+</a>
+
 <h2>Manage Users</h2>
 
 <div class="table-responsive">
     <table class="table table-striped table-hover table-condensed">
         <tr>
-            <th>E-Mail</th>
-            <th>Name</th>
-            <th>Admin</th>                        
-            <th>Active</th>
+            <th>                
+                E-Mail
+                <span class="glyphicon glyphicon-info-sign"
+                      tooltip="E-Mail addresses cannot be changed.  Deactivate and create new user.">
+                </span>
+            </th>
+            <th>
+                Name
+                <span class="glyphicon glyphicon-info-sign"
+                      tooltip="Click a name to edit."></span>
+            </th>
+            <th>
+                Admin
+                <span class="glyphicon glyphicon-info-sign"
+                      tooltip="Consider the implications of changing this for your own account.">                          
+                </span>
+            </th>                        
+            <th>
+                Active
+                <span class="glyphicon glyphicon-info-sign"
+                      tooltip="Only active users can login.  Deleting a user must
+                      be done via the Firebase dashboard.">
+                </span>
+            </th>
         </tr>
         <tr ng-repeat="user in users">
             <td>                
                 <em>{{user.email}}</em>
             </td>
             <td>
-                <span ng-hide="editName" ng-click="editName = true">
+                <span ng-hide="editName" ng-click="editName = true" tooltip="Click to edit.">
                     {{user.name}}
                 </span>
                 <input ng-show="editName" type="text" ng-model="user.name" />
@@ -30,7 +54,7 @@
     </table>
 </div>
 
-<h2>New User</h2>
+<h2>Add User</h2>
 
 <form name="userForm" ng-submit="userForm.$valid && userCtrl.addUser()" 
       novalidate>     
@@ -46,13 +70,13 @@
         <input type="text" class="form-control" ng-model="name" placeholder="Name" 
                required />        
     </div>
-    
+
     <div class="form-group">
         <label class="control-label sr-only">Password</label>
         <input type="password" class="form-control" ng-model="password" 
                placeholder="Password" required />        
     </div>
-    
+
     <button type="submit" class="btn btn-primary btn-lg" 
             ng-disabled="userForm.$invalid">
         Add</button>
