@@ -57,6 +57,8 @@
         'loginService', '$location', 'userService', function ($scope, 
         loginService, $location, userService) {            
     
+            $scope.location = $location;
+            
             /**
              * Update when auth state changes.
              */

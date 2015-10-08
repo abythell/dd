@@ -4,7 +4,8 @@
         {{username}} <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" role="menu" aria-labelledby="single-button">
-        <li ng-show="isAdmin" role="menuitem"><a href="#/admin">Admin</a></li>
+        <li ng-show="isAdmin && location.path() === '/view'" role="menuitem"><a href="#/admin">Admin</a></li>
+        <li role="menuitem" ng-show="location.path() === '/admin'"><a href="#/view">Home </a></li>
         <li role="menuitem"><a href="#/login" ng-click="signout()">Sign Out</a></li>        
         <li role="menuitem"><a href="#/reset">Change Password</a></li>           
     </ul>
