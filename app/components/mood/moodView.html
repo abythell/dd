@@ -1,12 +1,12 @@
 <h1>AM</h1>
 <div class="row">    
-    <div class="col-sm-3" ng-repeat="moodName in moodCtrl.moodList">                        
+    <div class="col-sm-3" ng-repeat="moodName in moodList">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="moodAM[moodName]" 
-                ng-class="moodAM[moodName] ? 'btn-primary' : ''"
+                ng-model="moodAM[moodName.$value]" 
+                ng-class="moodAM[moodName.$value] ? 'btn-primary' : ''"
                 ng-change="moodAM.$save()"
                 ng-disabled="!canEdit">                
-            {{moodName}}
+            {{moodName.$value}}
         </button>
         <br/>
     </div>
@@ -14,13 +14,13 @@
 
 <h1>PM</h1>
 <div class="row">    
-    <div class="col-sm-3" ng-repeat="moodName in moodCtrl.moodList">                        
+    <div class="col-sm-3" ng-repeat="moodName in moodList">                        
         <button type="button" class="btn btn-block" btn-checkbox
-                ng-model="moodPM[moodName]" 
-                ng-class="moodPM[moodName] ? 'btn-primary' : ''"
+                ng-model="moodPM[moodName.$value]" 
+                ng-class="moodPM[moodName.$value] ? 'btn-primary' : ''"
                 ng-change="moodPM.$save()"
                 ng-disabled="!canEdit">                
-            {{moodName}}
+            {{moodName.$value}}
         </button>
         <br/>
     </div>

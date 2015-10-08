@@ -4,7 +4,9 @@
         'dateService', '$scope', 'userService', function (moodService,
                 dateService, $scope, userService) {
 
-            this.moodList = moodService.moodList;
+            moodService.getMoodList().$loaded().then(function(list) {
+                $scope.moodList = list;
+            });
 
             /**
              * Asyncronously load the mood data for the selected date.             

@@ -1,0 +1,26 @@
+<h2>Quick Picks</h2>
+<ul class="list-group">
+    <li class="list-group-item" ng-repeat="mood in moodList">                        
+        <div class="list-group-item-text">
+            {{mood.$value}}
+            <span class="glyphicon glyphicon-remove pull-right text-danger"
+                  ng-click="moodList.$remove(mood)"></span>
+        </div>        
+    </li>
+</ul>    
+
+<form name="moodForm" ng-submit="moodForm.$valid && moodList.$add(newMood); newMood=''" 
+      novalidate class="form-inline"> 
+
+    <div class="form-group">
+        <label class="control-label sr-only" >Name</label>
+        <input type="text" class="form-control" ng-model="newMood" 
+               placeholder="New Quick Pick" required />
+    </div>
+
+    <button type="submit" class="btn btn-primary" 
+            ng-enabled="newMood" ng-disabled="moodForm.$invalid">
+        Add
+    </button>
+
+</form>

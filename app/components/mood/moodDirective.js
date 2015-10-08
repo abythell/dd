@@ -7,4 +7,15 @@
             controllerAs: 'moodCtrl'
         };
     });
+    
+        angular.module('moodModule').directive('abMoodsadmin', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/mood/moodViewAdmin.html',
+            controller: 'MoodAdminController',
+            controllerAs: 'moodAdminCtrl'
+        };
+    });
+    
+    
 })();
