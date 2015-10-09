@@ -9,7 +9,9 @@
     angular.module('userModule', []);
     angular.module('suppliesModule', []);
     angular.module('alertModule', []);
-    angular.module('seizureModule', []);
+    angular.module('seizureModule', ['ngSanitize', 'ngCsv']);
+
+    //TODO: assign dependencies to specific modules.
 
     var app = angular.module('appDD', ['dateModule',
         'notesModule',
