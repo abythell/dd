@@ -10,24 +10,24 @@
             <th>                
                 E-Mail
                 <span class="glyphicon glyphicon-info-sign"
-                      tooltip="E-Mail addresses cannot be changed.  Deactivate and create new user.">
+                      uib-tooltip="E-Mail addresses cannot be changed.  Deactivate and create new user.">
                 </span>
             </th>
             <th>
                 Name
                 <span class="glyphicon glyphicon-info-sign"
-                      tooltip="Click a name to edit."></span>
+                      uib-tooltip="Click a name to edit."></span>
             </th>
             <th>
                 Admin
                 <span class="glyphicon glyphicon-info-sign"
-                      tooltip="Consider the implications of changing this for your own account.">                          
+                      uib-tooltip="Consider the implications of changing this for your own account.">                          
                 </span>
             </th>                        
             <th>
                 Active
                 <span class="glyphicon glyphicon-info-sign"
-                      tooltip="Only active users can login.  Deleting a user must
+                      uib-tooltip="Only active users can login.  Deleting a user must
                       be done via the Firebase dashboard.">
                 </span>
             </th>
@@ -37,7 +37,7 @@
                 <em>{{user.email}}</em>
             </td>
             <td>
-                <span ng-hide="editName" ng-click="editName = true" tooltip="Click to edit.">
+                <span ng-hide="editName" ng-click="editName = true" uib-tooltip="Click to edit.">
                     {{user.name}}
                 </span>
                 <input ng-show="editName" type="text" ng-model="user.name" />
