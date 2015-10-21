@@ -16,9 +16,9 @@
                 return $firebaseArray(ref.child('config').child('supplies').child('multi'));  
             };
                                     
-            this.getSupplies = function (date) {
+            this.getSupplies = function (date, tod) {
                 var key = $filter('date')(date, "yyyy-MM-dd");
-                return $firebaseObject(ref.child('supplies').child(key));
+                return $firebaseObject(ref.child('supplies').child(key).child(tod));
             };
 
         }]);

@@ -1,38 +1,71 @@
-<h2>General Supplies</h2>
+<h2>Day Care Supplies</h2>
 <div class="row">   
 
     <div class="col-sm-4" ng-repeat="item in singleItems">                        
         <button type="button" class="btn btn-block" uib-btn-checkbox
-                ng-model="supplies[item.$value]" 
-                ng-class="supplies[item.$value] ? 'btn-primary' : ''"
-                ng-change="supplies.$save()"
+                ng-model="amSupplies[item.$value]" 
+                ng-class="amSupplies[item.$value] ? 'btn-primary' : ''"
+                ng-change="amSupplies.$save()"
                 ng-disabled="!canEdit">                
             {{item.$value}}
         </button>
         <br/>
     </div>
+
     <div class="col-sm-4">
         <button type="button" class="btn btn-block" ng-model="uhf" uib-btn-checkbox 
                 ng-click="uhfOpen()" ng-disabled="!canEdit">UHF</button>
-    </div>
+    </div>                
 </div>
 
-<h2>Other Supplies</h2>
-
 <div class="row">
-    <div ng-repeat="item in multiItems" class="col-lg-6">          
+    <div ng-repeat="item in multiItems" class="col-sm-6">          
         <div class="input-group">
 
             <div class="input-group-addon btn" 
-                 ng-class="{'primary': supplies[item.$value] > 0, 'disabled': !canEdit}">
+                 ng-class="{'primary': amSupplies[item.$value] > 0, 'disabled': !canEdit}">
                 {{item.$value}}                 
             </div>
 
             <input type="range" class="form-control" min="0" 
-                   max="10" ng-model="supplies[item.$value]" ng-change="supplies.$save()"
+                   max="10" ng-model="amSupplies[item.$value]" ng-change="amSupplies.$save()"
                    ng-disabled="!canEdit">
 
-            <div class="input-group-addon">{{supplies[item.$value]}}</div>
+            <div class="input-group-addon">{{amSupplies[item.$value]}}</div>
+        </div>
+        <br/>
+    </div>
+</div>
+
+<h2>School Supplies</h2>
+
+<div class="row">   
+    <div class="col-sm-4" ng-repeat="item in singleItems">                        
+        <button type="button" class="btn btn-block" uib-btn-checkbox
+                ng-model="pmSupplies[item.$value]" 
+                ng-class="pmSupplies[item.$value] ? 'btn-primary' : ''"
+                ng-change="pmSupplies.$save()"
+                ng-disabled="!canEdit">                
+            {{item.$value}}
+        </button>
+        <br/>
+    </div>    
+</div>
+
+<div class="row">
+    <div ng-repeat="item in multiItems" class="col-sm-6">          
+        <div class="input-group">
+
+            <div class="input-group-addon btn" 
+                 ng-class="{'primary': pmSupplies[item.$value] > 0, 'disabled': !canEdit}">
+                {{item.$value}}                 
+            </div>
+
+            <input type="range" class="form-control" min="0" 
+                   max="10" ng-model="pmSupplies[item.$value]" ng-change="pmSupplies.$save()"
+                   ng-disabled="!canEdit">
+
+            <div class="input-group-addon">{{pmSupplies[item.$value]}}</div>
         </div>
         <br/>
     </div>
