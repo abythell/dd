@@ -27,7 +27,7 @@
              * changes.
              */
             var getActivity = function () {
-                $scope.start = new Date();
+                $scope.start = new Date(dateService.selectedDate);
                 $scope.duration = 0;
                 userService.getCurrentUser().$loaded().then(function (user) {
                     $scope.uuid = user.$id;
