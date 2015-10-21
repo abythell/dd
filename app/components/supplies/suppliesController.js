@@ -12,6 +12,10 @@
             suppliesService.getMultiItemList().$loaded().then(function (items) {
                 $scope.multiItems = items;
             });
+            
+            suppliesService.getSettings().$loaded().then(function (settings) {
+                $scope.settings = settings;
+            });
 
             /*
              * Determine if the supplies for this day can be changed or not.             

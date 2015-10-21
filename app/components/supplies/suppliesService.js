@@ -15,6 +15,10 @@
             this.getMultiItemList = function() {
                 return $firebaseArray(ref.child('config').child('supplies').child('multi'));  
             };
+            
+            this.getSettings = function() {
+                return $firebaseObject(ref.child('config').child('supplies').child('settings'));                                        
+            };
                                     
             this.getSupplies = function (date, tod) {
                 var key = $filter('date')(date, "yyyy-MM-dd");

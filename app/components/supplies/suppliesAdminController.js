@@ -10,6 +10,11 @@
             suppliesService.getMultiItemList().$loaded().then(function (items) {
                 $scope.multiItems = items;
             });
+            
+            suppliesService.getSettings().$loaded().then(function (settings) {
+                $scope.settings = settings;
+                settings.$bindTo($scope, 'settings');
+            });
 
         }]);
 

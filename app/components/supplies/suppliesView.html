@@ -28,7 +28,7 @@
             </div>
 
             <input type="range" class="form-control" min="0" 
-                   max="10" ng-model="amSupplies[item.$value]" ng-change="amSupplies.$save()"
+                   max="{{settings.maxQty}}" ng-model="amSupplies[item.$value]" ng-change="amSupplies.$save()"
                    ng-disabled="!canEdit">
 
             <div class="input-group-addon">{{amSupplies[item.$value]}}</div>
@@ -62,7 +62,7 @@
             </div>
 
             <input type="range" class="form-control" min="0" 
-                   max="10" ng-model="pmSupplies[item.$value]" ng-change="pmSupplies.$save()"
+                   max="{{settings.maxQty}}" ng-model="pmSupplies[item.$value]" ng-change="pmSupplies.$save()"
                    ng-disabled="!canEdit">
 
             <div class="input-group-addon">{{pmSupplies[item.$value]}}</div>
