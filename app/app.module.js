@@ -26,9 +26,9 @@
         'alertModule',
         'seizureModule'
     ]);
-    app.controller('DdController', ['$scope', '$modal', function ($scope, $modal) {
+    app.controller('DdController', ['$scope', '$uibModal', function ($scope, $uibModal) {
             $scope.uhfOpen = function () {
-                $scope.uhfModal = $modal.open({
+                $scope.uhfModal = $uibModal.open({
                     animation: true,
                     templateUrl: 'uhfModalContent.html',
                 });
