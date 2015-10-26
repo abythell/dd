@@ -1,21 +1,17 @@
 (function () {
     angular.module('dateModule').service('dateService', [function() {
 
-        var date = {};
+        this.selectedDate = new Date();
 
-        date.selectedDate = new Date();
-
-        date.isToday = function () {
+        this.isToday = function () {
             var today = new Date().toDateString();
-            var selected = date.selectedDate.toDateString();
+            var selected = this.selectedDate.toDateString();
             return (selected === today);
         };
 
-        date.addDays = function (i) {
-            date.selectedDate.setDate(date.selectedDate.getDate() + i);            
+        this.addDays = function (i) {
+            this.selectedDate.setDate(this.selectedDate.getDate() + i);            
         };
-
-        return date;
 
     }]);
 
