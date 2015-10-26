@@ -1,8 +1,10 @@
 <p class="input-group">
-    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" 
-           ng-model="date.selectedDate" is-open="status.opened"  
-           ng-required="true" show-weeks="false"/>
+    
     <span class="input-group-btn">
         <button type="button" class="btn btn-default" ng-click="status.opened = true"><i class="glyphicon glyphicon-calendar"></i></button>
     </span>
+    
+    <input type="text" class="form-control" uib-datepicker-popup="yyyy-MM-dd" 
+           ng-model="date.selectedDate" is-open="status.opened"  
+           ng-required="true" show-weeks="false"/>
 </p>
