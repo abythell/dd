@@ -1,3 +1,8 @@
 The Daily Declan
 ================
-A simple daily journal / notebook web application written using AngularJS.
+
+To modify, build, and publish this application, you'll need:
+
+1. [node.js](https://nodejs.org/en/)
+2. gulp
+3. git
