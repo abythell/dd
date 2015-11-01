@@ -43,7 +43,7 @@
                 userService.getCurrentUser().$loaded().then(function (user) {
                     var newActivity = {
                         who: user.name,
-                        start: $scope.start.getTime(),
+                        start: $scope.start,
                         duration: $scope.duration,
                         notes: $scope.notes,
                         uuid: user.$id
