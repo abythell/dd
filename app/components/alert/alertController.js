@@ -9,10 +9,10 @@
              * been set.  The default message is displayed in a "warning"
              * style alert.                 
              */
-            var defaultMessage = "This tool is a means to communicate important "
-                    + "information about Declan and the events of his day.  Please "
-                    + "remember that we need your input to talk to Declan about what has "
-                    + "transpired, because he cannot tell us himself.";
+            var defaultMessage = "This tool is a means to communicate important " +
+                    "information about Declan and the events of his day.  Please " +
+                    "remember that we need your input to talk to Declan about what has " +
+                    "transpired, because he cannot tell us himself.";
 
             /*
              * When hidden, the alert message is not shown.

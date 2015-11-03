@@ -34,8 +34,9 @@
                 /*
                  * Loop through every day between the start and end dates, creating
                  * a list of promises that will push activity data on the main
-                 * array once resolved.
-                 */                
+                 * array once resolved.                 
+                 */              
+                /* jshint -W083 */
                 var promises = [];
                 for (var d = new Date($scope.startDate); d <= $scope.endDate; d.setDate(d.getDate() + 1)) {
                     var promise = seizureService.getSeizure(d).$loaded().then(function (data) {                                                
