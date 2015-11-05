@@ -11,7 +11,17 @@ var gulp = require('gulp'),
     livereload = require('gulp-livereload'),
     del = require('del');
 
+gulp.task('clean', function () {  
+  return gulp.src('dist', {read: false})
+    .pipe(clean());
+});
+
 gulp.task('test', function() {
-   gulp.src('./app/**/*.js')
-           .pipe(jshint()).pipe(jshint.reporter('default'));
+   return gulp.src('./app/**/*.js')
+           .pipe(jshint()).pipe(jshint.reporter('default'))
+	   .pipe(concat('dd.js'))
+	   .pipe(gulp.dest(''))
+	   .pipe(uglify())
+	   .pipe(rename('dd.min.js'))
+	   .pipe(gulp.dest(''))
 });
