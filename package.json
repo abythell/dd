@@ -5,6 +5,7 @@
   "main": "index.html",
   "dependencies": {},
   "devDependencies": {
+    "firebase-tools": "^2.0.2",
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-jshint": "^1.12.0",
