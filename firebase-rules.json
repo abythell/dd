@@ -1,0 +1,26 @@
+{
+    "rules": {
+      "alerts" : {
+        ".write": "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+      },
+      "config" : {
+        ".write": "(root.child('users').child(auth.uid).child('active').val() === true) && (root.child('users').child(auth.uid).child('admin').val() === true)"
+      },
+      "mood": {
+        ".write": "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+      },
+      "notes": {
+        ".write": "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+      },
+      "seizure": {
+        ".write": "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+      },
+      "supplies": {
+        ".write": "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+      },
+      "users": {
+        ".write": "(root.child('users').child(auth.uid).child('active').val() === true) && (root.child('users').child(auth.uid).child('admin').val() === true)"
+      },
+        ".read":  "auth !== null && root.child('users').child(auth.uid).child('active').val() === true"
+    }
+}

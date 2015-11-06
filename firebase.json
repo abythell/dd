@@ -1,0 +1,16 @@
+{
+  "firebase": "brilliant-inferno-6689",
+  "public": "./",
+  "ignore": [
+    "**/.*",
+    "app/**/*.js",
+    "firebase.json",
+    "gulpfile.js",
+    "nbproject",
+    "node_modules/**",
+    "package.json",
+    "README.md",
+    "firebase-rules.json"
+  ],
+  "rules": "firebase-rules.json"
+}
