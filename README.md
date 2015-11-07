@@ -28,11 +28,11 @@ gulp
 Modifying and Debugging
 -----------------------
 You can edit this project using any development tool of your choice, however
-the app was build using Netbeans and will open in Netbeans as an HTML5 project.
+the app was built using Netbeans and will open in Netbeans as an HTML5 project.
 
 `gulp` will combine and minify all javascript sources in the `app` directory and
-output to `./dist/dd.min.js`.  You will need to run `gulp` anytime to change a 
-javascript file to add the changes to `dd.min.js`.
+output to `./dist/dd.min.js`.  You will need to run `gulp` anytime you change a 
+javascript file to update `dd.min.js`.
 
 To run gulp automatically whenever a javascript file changes, run `gulp watch`.
 Then, anytime a javascript file is saved, gulp will automatically output a new
@@ -49,3 +49,7 @@ Deploying
 Publish the application to firebase by running
 `node_modules/firebase-tools/bin/firebase/deploy`.  If you want to publish to a
 database other than default, please see `firebase.json`.
+
+About
+-----
+Copyright 2015 Trevor Patterson, Andrew Bythell.
