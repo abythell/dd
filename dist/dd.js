@@ -101,16 +101,14 @@
     angular.module('alertModule').controller('AlertController', ['alertService',
         'dateService', '$scope', 'userService', function (alertService,
                 dateService, $scope, userService) {
-
+            
             /*
-             * This message will be displayed if a custom message has not
-             * been set.  The default message is displayed in a "warning"
-             * style alert.                 
+             * Load the default message from the data store.
              */
-            var defaultMessage = "This tool is a means to communicate important " +
-                    "information about Declan and the events of his day.  Please " +
-                    "remember that we need your input to talk to Declan about what has " +
-                    "transpired, because he cannot tell us himself.";
+            var defaultMessage = '';
+            alertService.getDefaultMessage().$loaded().then(function(msg) {
+                defaultMessage = msg;
+            });
 
             /*
              * When hidden, the alert message is not shown.
@@ -127,8 +125,8 @@
              */
             this.edit = function () {
                 if ($scope.canEdit) {
-                    if ($scope.alert.$value === defaultMessage) {
-                        this.previousMessage = defaultMessage;
+                    if ($scope.alert.$value === defaultMessage.$value) {
+                        this.previousMessage = defaultMessage.$value;
                         $scope.alert.$value = '';
                     }
                     this.editMode = true;
@@ -145,10 +143,13 @@
                     $scope.alert.$save();
                     $scope.alertClass = "alert-danger";
                 } else {
-                    $scope.alert.$value = defaultMessage;
+                    $scope.alert.$value = defaultMessage.$value;
                 }
             };
-                                    
+              
+            /*
+             * Cancel editing.  Return the message to the previous one.
+             */
             this.cancel = function() {
                 this.editMode = false;
                 if (this.previousMessage) {
@@ -156,6 +157,9 @@
                 }
             };
             
+            /*
+             * Clear the text box.
+             */
             this.clear = function() {
                 this.previousMessage = $scope.alert.$value;
                 $scope.alert.$value = '';
@@ -167,10 +171,18 @@
             this.reset = function () {
                 this.editMode = false;
                 $scope.alert.$remove().then(function () {
-                    $scope.alert.$value = defaultMessage;
+                    $scope.alert.$value = defaultMessage.$value;
                 });
 
                 $scope.alertClass = "alert-warning";
+            };
+            
+            /*
+             * Set a new default message.
+             */
+            this.setDefault = function() {
+              defaultMessage.$value = $scope.alert.$value;  
+              defaultMessage.$save();
             };
 
             /**
@@ -181,7 +193,7 @@
                 alert.$loaded().then(function (data) {
                     $scope.alert = data;
                     if (data.$value === null) {
-                        data.$value = defaultMessage;
+                        data.$value = defaultMessage.$value;
                         $scope.alertClass = 'alert-warning';
                     } else {
                         $scope.alertClass = 'alert-danger';
@@ -242,6 +254,10 @@
             this.getAlert = function(date, tod) {
                 var key = $filter('date')(date, "yyyy-MM-dd");
                 return $firebaseObject(ref.child('alerts').child(key));
+            };
+            
+            this.getDefaultMessage = function() {
+              return $firebaseObject(ref.child('config').child('defaultMessage'));  
             };
 
         }]);
@@ -650,6 +666,240 @@
 })();
 (function () {
 
+    angular.module('userModule').controller('UserController', ['userService',
+        '$scope', 'loginService', function (userService, $scope, loginService) {
+
+            /*
+             * On init, load list of users.
+             */
+            userService.getAllUsers().$loaded().then(function (users) {
+                $scope.users = users;
+            });
+            this.addUser = function () {
+
+                loginService.$createUser({
+                    email: $scope.email,
+                    password: $scope.password
+                }).then(function (userData) {
+                    $scope.users[userData.uid] = {
+                        name: $scope.name,
+                        email: $scope.email,
+                        active: true,
+                        admin: false
+                    };
+                    $scope.users.$save();
+                });
+
+            };
+        }]);
+})();
+(function () {
+    angular.module('userModule').directive('abUsers', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/user/userView.html',
+            controller: 'UserController',
+            controllerAs: 'userCtrl'
+        };
+    });
+})();
+(function () {
+
+    angular.module('userModule').factory('userService', ['$firebaseObject',
+        'loginService', function ($firebaseObject, loginService) {
+            
+            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+            var ref = new Firebase(firebaseUrl);            
+            
+            var userService = {};
+            
+            /**
+             * Get the firebaseObject for a user
+             * @param {type} uid - Firebase registered user UID
+             * @returns firebaseObject containing the name of the user.
+             */
+            userService.getUser = function(uid) {
+                return $firebaseObject(ref.child('users').child(uid));
+            };
+            
+            /**
+             * Get the firebaseObject for the current user
+             * @returns firebaseObject or null if no user is logged in.
+             */
+            userService.getCurrentUser = function() {
+                var authData = loginService.$getAuth();
+                if (authData) {
+                    return $firebaseObject(ref.child('users').child(authData.uid));                
+                } else {
+                    return null;
+                }
+            };
+            
+            userService.getAllUsers = function() {
+                return $firebaseObject(ref.child('users'));
+            };
+            
+            /**
+             * Get the current user's admin status.  
+             * @returns A promise resolved with a boolean admin status.
+             */
+            userService.isCurrentUserAdmin = function() {
+                var user = userService.getCurrentUser();
+                return user.$loaded().then(function(data) {
+                    return data.admin;
+                });
+            };
+                                    
+            return userService;
+                                    
+        }]);
+
+})();
+
+
+(function () {
+
+    angular.module('suppliesModule').controller('SuppliesAdminController', ['suppliesService',
+        '$scope', function (suppliesService, $scope) {
+
+            suppliesService.getSingleItemList().$loaded().then(function (items) {
+                $scope.singleItems = items;
+            });
+
+            suppliesService.getMultiItemList().$loaded().then(function (items) {
+                $scope.multiItems = items;
+            });
+            
+            suppliesService.getSettings().$loaded().then(function (settings) {
+                $scope.settings = settings;
+                settings.$bindTo($scope, 'settings');
+            });
+
+        }]);
+
+})();
+(function () {
+
+    angular.module('suppliesModule').controller('SuppliesController', ['suppliesService',
+        'dateService', '$scope', 'userService', function (suppliesService,
+                dateService, $scope, userService) {
+
+
+            suppliesService.getSingleItemList().$loaded().then(function (items) {
+                $scope.singleItems = items;
+            });
+            
+            suppliesService.getMultiItemList().$loaded().then(function (items) {
+                $scope.multiItems = items;
+            });
+            
+            suppliesService.getSettings().$loaded().then(function (settings) {
+                $scope.settings = settings;
+            });
+
+            /*
+             * Determine if the supplies for this day can be changed or not.             
+             */
+            var setEditable = function () {
+                userService.isCurrentUserAdmin().then(function (admin) {
+                    if (admin | dateService.isToday()) {
+                        $scope.canEdit = true;
+                    } else {
+                        $scope.canEdit = false;
+                    }
+                });
+            };
+
+            var updateAmSupplies = function () {
+                var obj = suppliesService.getSupplies(dateService.selectedDate, 'am');
+                obj.$loaded().then(function () {
+                    $scope.amSupplies = obj;
+                    for (var i=0; i< $scope.multiItems.length; i++) {
+                        $scope.amSupplies[$scope.multiItems[i].$value] = 
+                                $scope.amSupplies[$scope.multiItems[i].$value] || 0;
+                    }
+                });
+            };
+            
+            var updatePmSupplies = function () {
+                var obj = suppliesService.getSupplies(dateService.selectedDate, 'pm');
+                obj.$loaded().then(function () {
+                    $scope.pmSupplies = obj;
+                    for (var i=0; i< $scope.multiItems.length; i++) {
+                        $scope.pmSupplies[$scope.multiItems[i].$value] = 
+                                $scope.pmSupplies[$scope.multiItems[i].$value] || 0;
+                    }
+                });
+            };
+
+            /*
+             * Fetch new data when the date changes - this includes the 
+             * initial load.
+             */
+            $scope.$watch(function () {
+                return dateService.selectedDate;
+            }, function () {
+                updateAmSupplies();
+                updatePmSupplies();
+                setEditable();
+            }, true);
+
+        }]);
+
+})();
+(function () {
+    angular.module('suppliesModule').directive('abSupplies', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/supplies/suppliesView.html',
+            controller: 'SuppliesController',
+            controllerAs: 'suppliesCtrl'
+        };
+    });
+    
+        angular.module('suppliesModule').directive('abSuppliesadmin', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/supplies/suppliesViewAdmin.html',
+            controller: 'SuppliesAdminController',
+            controllerAs: 'suppliesAdminCtrl'
+        };
+    });
+    
+    
+})();
+(function () {
+    angular.module('suppliesModule').service('suppliesService', ['$firebaseObject',
+        '$filter', '$firebaseArray', function ($firebaseObject, $filter, $firebaseArray) {
+
+            /*
+             * URL of firebase app
+             */
+            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+            var ref = new Firebase(firebaseUrl);
+                        
+            this.getSingleItemList = function() {
+              return $firebaseArray(ref.child('config').child('supplies').child('single'));  
+            };
+            
+            this.getMultiItemList = function() {
+                return $firebaseArray(ref.child('config').child('supplies').child('multi'));  
+            };
+            
+            this.getSettings = function() {
+                return $firebaseObject(ref.child('config').child('supplies').child('settings'));                                        
+            };
+                                    
+            this.getSupplies = function (date, tod) {
+                var key = $filter('date')(date, "yyyy-MM-dd");
+                return $firebaseObject(ref.child('supplies').child(key).child(tod));
+            };
+
+        }]);
+
+})();
+(function () {
+
     angular.module('seizureModule').controller('SeizureAdminController', ['$scope', 
         'seizureService', '$q', '$filter', function ($scope, seizureService, $q, $filter) {
                     
@@ -834,236 +1084,3 @@
             }]);
 
 })();
-(function () {
-
-    angular.module('suppliesModule').controller('SuppliesAdminController', ['suppliesService',
-        '$scope', function (suppliesService, $scope) {
-
-            suppliesService.getSingleItemList().$loaded().then(function (items) {
-                $scope.singleItems = items;
-            });
-
-            suppliesService.getMultiItemList().$loaded().then(function (items) {
-                $scope.multiItems = items;
-            });
-            
-            suppliesService.getSettings().$loaded().then(function (settings) {
-                $scope.settings = settings;
-                settings.$bindTo($scope, 'settings');
-            });
-
-        }]);
-
-})();
-(function () {
-
-    angular.module('suppliesModule').controller('SuppliesController', ['suppliesService',
-        'dateService', '$scope', 'userService', function (suppliesService,
-                dateService, $scope, userService) {
-
-
-            suppliesService.getSingleItemList().$loaded().then(function (items) {
-                $scope.singleItems = items;
-            });
-            
-            suppliesService.getMultiItemList().$loaded().then(function (items) {
-                $scope.multiItems = items;
-            });
-            
-            suppliesService.getSettings().$loaded().then(function (settings) {
-                $scope.settings = settings;
-            });
-
-            /*
-             * Determine if the supplies for this day can be changed or not.             
-             */
-            var setEditable = function () {
-                userService.isCurrentUserAdmin().then(function (admin) {
-                    if (admin | dateService.isToday()) {
-                        $scope.canEdit = true;
-                    } else {
-                        $scope.canEdit = false;
-                    }
-                });
-            };
-
-            var updateAmSupplies = function () {
-                var obj = suppliesService.getSupplies(dateService.selectedDate, 'am');
-                obj.$loaded().then(function () {
-                    $scope.amSupplies = obj;
-                    for (var i=0; i< $scope.multiItems.length; i++) {
-                        $scope.amSupplies[$scope.multiItems[i].$value] = 
-                                $scope.amSupplies[$scope.multiItems[i].$value] || 0;
-                    }
-                });
-            };
-            
-            var updatePmSupplies = function () {
-                var obj = suppliesService.getSupplies(dateService.selectedDate, 'pm');
-                obj.$loaded().then(function () {
-                    $scope.pmSupplies = obj;
-                    for (var i=0; i< $scope.multiItems.length; i++) {
-                        $scope.pmSupplies[$scope.multiItems[i].$value] = 
-                                $scope.pmSupplies[$scope.multiItems[i].$value] || 0;
-                    }
-                });
-            };
-
-            /*
-             * Fetch new data when the date changes - this includes the 
-             * initial load.
-             */
-            $scope.$watch(function () {
-                return dateService.selectedDate;
-            }, function () {
-                updateAmSupplies();
-                updatePmSupplies();
-                setEditable();
-            }, true);
-
-        }]);
-
-})();
-(function () {
-    angular.module('suppliesModule').directive('abSupplies', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/components/supplies/suppliesView.html',
-            controller: 'SuppliesController',
-            controllerAs: 'suppliesCtrl'
-        };
-    });
-    
-        angular.module('suppliesModule').directive('abSuppliesadmin', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/components/supplies/suppliesViewAdmin.html',
-            controller: 'SuppliesAdminController',
-            controllerAs: 'suppliesAdminCtrl'
-        };
-    });
-    
-    
-})();
-(function () {
-    angular.module('suppliesModule').service('suppliesService', ['$firebaseObject',
-        '$filter', '$firebaseArray', function ($firebaseObject, $filter, $firebaseArray) {
-
-            /*
-             * URL of firebase app
-             */
-            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
-            var ref = new Firebase(firebaseUrl);
-                        
-            this.getSingleItemList = function() {
-              return $firebaseArray(ref.child('config').child('supplies').child('single'));  
-            };
-            
-            this.getMultiItemList = function() {
-                return $firebaseArray(ref.child('config').child('supplies').child('multi'));  
-            };
-            
-            this.getSettings = function() {
-                return $firebaseObject(ref.child('config').child('supplies').child('settings'));                                        
-            };
-                                    
-            this.getSupplies = function (date, tod) {
-                var key = $filter('date')(date, "yyyy-MM-dd");
-                return $firebaseObject(ref.child('supplies').child(key).child(tod));
-            };
-
-        }]);
-
-})();
-(function () {
-
-    angular.module('userModule').controller('UserController', ['userService',
-        '$scope', 'loginService', function (userService, $scope, loginService) {
-
-            /*
-             * On init, load list of users.
-             */
-            userService.getAllUsers().$loaded().then(function (users) {
-                $scope.users = users;
-            });
-            this.addUser = function () {
-
-                loginService.$createUser({
-                    email: $scope.email,
-                    password: $scope.password
-                }).then(function (userData) {
-                    $scope.users[userData.uid] = {
-                        name: $scope.name,
-                        email: $scope.email,
-                        active: true,
-                        admin: false
-                    };
-                    $scope.users.$save();
-                });
-
-            };
-        }]);
-})();
-(function () {
-    angular.module('userModule').directive('abUsers', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/components/user/userView.html',
-            controller: 'UserController',
-            controllerAs: 'userCtrl'
-        };
-    });
-})();
-(function () {
-
-    angular.module('userModule').factory('userService', ['$firebaseObject',
-        'loginService', function ($firebaseObject, loginService) {
-            
-            var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
-            var ref = new Firebase(firebaseUrl);            
-            
-            var userService = {};
-            
-            /**
-             * Get the firebaseObject for a user
-             * @param {type} uid - Firebase registered user UID
-             * @returns firebaseObject containing the name of the user.
-             */
-            userService.getUser = function(uid) {
-                return $firebaseObject(ref.child('users').child(uid));
-            };
-            
-            /**
-             * Get the firebaseObject for the current user
-             * @returns firebaseObject or null if no user is logged in.
-             */
-            userService.getCurrentUser = function() {
-                var authData = loginService.$getAuth();
-                if (authData) {
-                    return $firebaseObject(ref.child('users').child(authData.uid));                
-                } else {
-                    return null;
-                }
-            };
-            
-            userService.getAllUsers = function() {
-                return $firebaseObject(ref.child('users'));
-            };
-            
-            /**
-             * Get the current user's admin status.  
-             * @returns A promise resolved with a boolean admin status.
-             */
-            userService.isCurrentUserAdmin = function() {
-                var user = userService.getCurrentUser();
-                return user.$loaded().then(function(data) {
-                    return data.admin;
-                });
-            };
-                                    
-            return userService;
-                                    
-        }]);
-
-})();
-

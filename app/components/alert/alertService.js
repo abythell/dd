@@ -15,6 +15,10 @@
                 var key = $filter('date')(date, "yyyy-MM-dd");
                 return $firebaseObject(ref.child('alerts').child(key));
             };
+            
+            this.getDefaultMessage = function() {
+              return $firebaseObject(ref.child('config').child('defaultMessage'));  
+            };
 
         }]);
 
