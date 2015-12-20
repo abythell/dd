@@ -3,16 +3,14 @@
     angular.module('alertModule').controller('AlertController', ['alertService',
         'dateService', '$scope', 'userService', function (alertService,
                 dateService, $scope, userService) {
-
+            
             /*
-             * This message will be displayed if a custom message has not
-             * been set.  The default message is displayed in a "warning"
-             * style alert.                 
+             * Load the default message from the data store.
              */
-            var defaultMessage = "This tool is a means to communicate important " +
-                    "information about Declan and the events of his day.  Please " +
-                    "remember that we need your input to talk to Declan about what has " +
-                    "transpired, because he cannot tell us himself.";
+            var defaultMessage = '';
+            alertService.getDefaultMessage().$loaded().then(function(msg) {
+                defaultMessage = msg;
+            });
 
             /*
              * When hidden, the alert message is not shown.
@@ -29,8 +27,8 @@
              */
             this.edit = function () {
                 if ($scope.canEdit) {
-                    if ($scope.alert.$value === defaultMessage) {
-                        this.previousMessage = defaultMessage;
+                    if ($scope.alert.$value === defaultMessage.$value) {
+                        this.previousMessage = defaultMessage.$value;
                         $scope.alert.$value = '';
                     }
                     this.editMode = true;
@@ -47,10 +45,13 @@
                     $scope.alert.$save();
                     $scope.alertClass = "alert-danger";
                 } else {
-                    $scope.alert.$value = defaultMessage;
+                    $scope.alert.$value = defaultMessage.$value;
                 }
             };
-                                    
+              
+            /*
+             * Cancel editing.  Return the message to the previous one.
+             */
             this.cancel = function() {
                 this.editMode = false;
                 if (this.previousMessage) {
@@ -58,6 +59,9 @@
                 }
             };
             
+            /*
+             * Clear the text box.
+             */
             this.clear = function() {
                 this.previousMessage = $scope.alert.$value;
                 $scope.alert.$value = '';
@@ -69,10 +73,18 @@
             this.reset = function () {
                 this.editMode = false;
                 $scope.alert.$remove().then(function () {
-                    $scope.alert.$value = defaultMessage;
+                    $scope.alert.$value = defaultMessage.$value;
                 });
 
                 $scope.alertClass = "alert-warning";
+            };
+            
+            /*
+             * Set a new default message.
+             */
+            this.setDefault = function() {
+              defaultMessage.$value = $scope.alert.$value;  
+              defaultMessage.$save();
             };
 
             /**
@@ -83,7 +95,7 @@
                 alert.$loaded().then(function (data) {
                     $scope.alert = data;
                     if (data.$value === null) {
-                        data.$value = defaultMessage;
+                        data.$value = defaultMessage.$value;
                         $scope.alertClass = 'alert-warning';
                     } else {
                         $scope.alertClass = 'alert-danger';
