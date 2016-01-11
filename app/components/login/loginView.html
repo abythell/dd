@@ -13,10 +13,10 @@
                ng-model="loginCtrl.password" placeholder="Password" required>
     </div>
 
-    <button type="submit" class="btn btn-primary" ng-disabled="!loginForm.$valid">            
+    <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!loginForm.$valid">            
         Login
     </button>  
-    <button class="btn" ng-click="loginCtrl.resetPassword()" ng-disabled="!loginCtrl.email">
+    <button class="btn btn-link" ng-click="loginCtrl.resetPassword()" ng-disabled="!loginCtrl.email">
         Reset Password</button>
 
 </form>
