@@ -33,8 +33,9 @@
                         who: user.name,
                         uuid: user.$id
                     };
-                    $scope.notes.$add(newNote);
-                    $scope.what = '';
+                    $scope.notes.$add(newNote).then(function () {
+                        $scope.what = '';
+                    });                    
                 });
             };
 

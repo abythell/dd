@@ -472,6 +472,88 @@
 
 (function () {
 
+    angular.module('notesModule').controller('NotesController', ['dateService',
+        '$scope', 'userService', 'notesService', function (dateService, $scope,
+                userService, notesService) {
+
+            /*
+             * Determine if the notes for this day can be changed or not.             
+             */
+            var setEditable = function () {
+                userService.isCurrentUserAdmin().then(function (admin) {
+                    if (admin | dateService.isToday()) {
+                        $scope.canEdit = true;
+                    } else {
+                        $scope.canEdit = false;
+                    }
+                });
+            };
+
+            var getNotes = function () {
+                userService.getCurrentUser().$loaded().then(function (user) {
+                    $scope.uuid = user.$id;
+                    $scope.notes = notesService.getNotes(dateService.selectedDate);                
+                });
+            };
+
+            this.addNote = function (what) {
+                userService.getCurrentUser().$loaded().then(function (user) {
+                    var date = new Date().getTime();
+                    var newNote = {
+                        what: what,
+                        when: date,
+                        who: user.name,
+                        uuid: user.$id
+                    };
+                    $scope.notes.$add(newNote).then(function () {
+                        $scope.what = '';
+                    });                    
+                });
+            };
+
+            /*
+             * Fetch new data when the date changes - this includes the 
+             * initial load.
+             */
+            $scope.$watch(function () {
+                return dateService.selectedDate;
+            }, function () {
+                getNotes();
+                setEditable();
+            }, true);
+        }]);
+
+})();
+(function () {
+    angular.module('notesModule').directive('abNotes', function () {
+        return {
+            restrict: 'E',
+            templateUrl: 'app/components/notes/notesView.html',
+            controller: 'NotesController',
+            controllerAs: 'notesCtrl'
+        };
+    });
+})();
+(function () {   
+    angular.module('notesModule').service('notesService', ['$firebaseArray',
+            '$filter', function ($firebaseArray, $filter) {
+
+                /*
+                 * URL of firebase app
+                 */
+                var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
+                var ref = new Firebase(firebaseUrl);
+
+                this.getNotes = function (date) {
+                    var key = $filter('date')(date, "yyyy-MM-dd");
+                    return $firebaseArray(ref.child('notes').child(key));
+                };
+
+            }]);
+
+})();
+(function () {
+
     angular.module('moodModule').controller('MoodAdminController', ['moodService',
         '$scope', function (moodService, $scope) {
 
@@ -585,154 +667,74 @@
 })();
 (function () {
 
-    angular.module('notesModule').controller('NotesController', ['dateService',
-        '$scope', 'userService', 'notesService', function (dateService, $scope,
-                userService, notesService) {
+    angular.module('seizureModule').controller('SeizureAdminController', SeizureAdminController);
+    SeizureAdminController.$inject = ['$scope', 'seizureService', '$q', '$filter'];
+
+    function SeizureAdminController($scope, seizureService, $q, $filter) {
+
+        var seizureAdminCtrl = this;
+        seizureAdminCtrl.export = exportCSV;
+
+        /*
+         * Set datepickers to today's date.
+         */
+        $scope.startDate = new Date();
+        $scope.endDate = new Date();
+        
+        /*
+         * Header for CSV data.
+         */
+        $scope.csvHeader = [
+            'Date',
+            'Time',
+            'Duration',
+            'Name',
+            'Notes'
+        ];
+
+        /*
+         * Create a promise that resolves with the requested activity data.
+         */
+        function exportCSV() {
+            var defer = $q.defer();            
+            var csvData = [];
 
             /*
-             * Determine if the notes for this day can be changed or not.             
+             * Loop through every day between the start and end dates, creating
+             * a list of promises that will push activity data on the main
+             * array once resolved.                 
              */
-            var setEditable = function () {
-                userService.isCurrentUserAdmin().then(function (admin) {
-                    if (admin | dateService.isToday()) {
-                        $scope.canEdit = true;
-                    } else {
-                        $scope.canEdit = false;
+            /* jshint -W083 */
+            var promises = [];
+            for (var d = new Date($scope.startDate); d <= $scope.endDate; d.setDate(d.getDate() + 1)) {
+                var promise = seizureService.getSeizure(d).$loaded().then(function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        var activity = {
+                            date: $filter('date')(data[i].start, 'yyyy-MM-dd'),
+                            time: $filter('date')(data[i].start, 'HH:mm'),
+                            duration: data[i].duration,
+                            who: data[i].who,
+                            notes: data[i].notes
+                        };
+                        csvData.push(activity);
                     }
+                    return 'done';
                 });
-            };
-
-            var getNotes = function () {
-                userService.getCurrentUser().$loaded().then(function (user) {
-                    $scope.uuid = user.$id;
-                    $scope.notes = notesService.getNotes(dateService.selectedDate);                
-                });
-            };
-
-            this.addNote = function (what) {
-                userService.getCurrentUser().$loaded().then(function (user) {
-                    var date = new Date().getTime();
-                    var newNote = {
-                        what: what,
-                        when: date,
-                        who: user.name,
-                        uuid: user.$id
-                    };
-                    $scope.notes.$add(newNote);
-                    $scope.what = '';
-                });
-            };
+                promises.push(promise);
+            }
 
             /*
-             * Fetch new data when the date changes - this includes the 
-             * initial load.
+             * Wait until all the data has been pushed onto the main array
+             * before resolving the 'master' promise.
              */
-            $scope.$watch(function () {
-                return dateService.selectedDate;
-            }, function () {
-                getNotes();
-                setEditable();
-            }, true);
-        }]);
+            $q.all(promises).then(function () {
+                defer.resolve(csvData);
+            });
 
-})();
-(function () {
-    angular.module('notesModule').directive('abNotes', function () {
-        return {
-            restrict: 'E',
-            templateUrl: 'app/components/notes/notesView.html',
-            controller: 'NotesController',
-            controllerAs: 'notesCtrl'
-        };
-    });
-})();
-(function () {   
-    angular.module('notesModule').service('notesService', ['$firebaseArray',
-            '$filter', function ($firebaseArray, $filter) {
+            return defer.promise;
+        }
 
-                /*
-                 * URL of firebase app
-                 */
-                var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com';
-                var ref = new Firebase(firebaseUrl);
-
-                this.getNotes = function (date) {
-                    var key = $filter('date')(date, "yyyy-MM-dd");
-                    return $firebaseArray(ref.child('notes').child(key));
-                };
-
-            }]);
-
-})();
-(function () {
-
-    angular.module('seizureModule').controller('SeizureAdminController', ['$scope', 
-        'seizureService', '$q', '$filter', function ($scope, seizureService, $q, $filter) {
-                    
-            /*
-             * Set datepickers to today's date.
-             */
-            $scope.startDate = new Date();
-            $scope.endDate = new Date();
-            
-            /*
-             * This will get populated with the CSV data.
-             */
-            $scope.data = [];
-            
-            /*
-             * Header for CSV data.
-             */
-            $scope.csvHeader = [
-                'Date',
-                'Time',
-                'Duration',
-                'Name',
-                'Notes'
-            ];
-            
-            /*
-             * Create a promise that resolves with the requested activity data.
-             */
-            this.export = function() {                                                                
-                var defer = $q.defer();
-                                
-                /*
-                 * Loop through every day between the start and end dates, creating
-                 * a list of promises that will push activity data on the main
-                 * array once resolved.                 
-                 */              
-                /* jshint -W083 */
-                var promises = [];
-                for (var d = new Date($scope.startDate); d <= $scope.endDate; d.setDate(d.getDate() + 1)) {
-                    var promise = seizureService.getSeizure(d).$loaded().then(function (data) {                                                
-                        for (var i=0; i< data.length; i++) {                                                        
-                            var activity = {
-                                date: $filter('date')(data[i].start, 'yyyy-MM-dd'),
-                                time: $filter('date')(data[i].start, 'HH:mm'),
-                                duration: data[i].duration,
-                                who: data[i].who,
-                                notes: data[i].notes
-                            };
-                            $scope.data.push(activity);
-                        }                        
-                        return 'done';
-                    });
-                    promises.push(promise);                    
-                }
-                
-                /*
-                 * Wait until all the data has been pushed onto the main array
-                 * before resolving the 'master' promise.
-                 */
-                $q.all(promises).then(function() {                    
-                    defer.resolve($scope.data);                    
-                });
-                                
-                return defer.promise;
-            };
-                        
-        }]);
+    }
 
 })();
 (function () {
@@ -767,6 +769,8 @@
                 var currentTime = new Date().getTime();
                 $scope.start = new Date(dateService.selectedDate).setTime(currentTime);
                 $scope.duration = 0;
+                $scope.what = '';
+                $scope.notes = '';
                 userService.getCurrentUser().$loaded().then(function (user) {
                     $scope.uuid = user.$id;
                     $scope.activity = seizureService.getSeizure(dateService.selectedDate);
@@ -785,15 +789,9 @@
                         notes: $scope.notes,
                         uuid: user.$id
                     };
-                    $scope.activity.$add(newActivity);
-                    
-                    /*
-                     * Reset the form.
-                     */
-                    $scope.what = '';
-                    $scope.start = new Date();
-                    $scope.duration = 0;
-                    $scope.notes = '';
+                    $scope.activity.$add(newActivity).then(function () {
+                        getActivity();
+                    });                    
                 });
             };
 
