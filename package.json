@@ -16,8 +16,9 @@
   },
   "scripts": {    
     "postinstall": "node_modules/gulp/bin/gulp.js",
-    "postpublish" : "npm version patch",
-    "publish": "node_modules/firebase-tools/bin/firebase/deploy"
+    "predeploy" : "node_modules/gulp/bin/gulp.js; node_modules/firebase-tools/bin/firebase login;",    
+    "deploy": "node_modules/firebase-tools/bin/firebase deploy",
+    "postdeploy" : "npm version patch"
   },
   "repository": {
     "type": "git",

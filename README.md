@@ -44,7 +44,7 @@ request](https://github.com/abythell/dd/pulls).
 
 Deploying
 ---------
-Publish the application to Firebase by running `npm publish`.  
+Publish the application to Firebase by running `npm run-script deploy`.  
 
 If you want to publish to a database other than default, please see 
 `firebase.json`.
