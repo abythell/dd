@@ -5,22 +5,18 @@
 
 <h2>Export Seizure-like Activity</h2>
 
-<form name="exportForm" ng-submit="exportForm.$valid && seizureAdminCtrl.export()" 
-      novalidate >     
+<div class="form-group">        
+    <label class="control-label">Start Date</label>
+    <input type="date" ng-model="startDate" required />
+</div>
 
-    <div class="form-group">        
-        <label class="control-label">Start Date</label>
-        <input type="date" ng-model="startDate" required />
-    </div>
+<div class="form-group">       
+    <label class="control-label">End Date</label>
+    <input type="date" ng-model="endDate" required />        
+</div>
 
-    <div class="form-group">       
-        <label class="control-label">End Date</label>
-        <input type="date" ng-model="endDate" required />        
-    </div>
+<button class="btn btn-primary" ng-csv="seizureAdminCtrl.export()" 
+        ng-disabled="exportForm.$invalid" filename="activity.csv" lazy-load="true" 
+        csv-header="csvHeader" quote-strings="true">
+    Export</button>
 
-    <button type="submit" class="btn btn-primary" ng-csv="seizureAdminCtrl.export()" 
-            ng-disabled="exportForm.$invalid" filename="activity.csv" lazy-load="true" 
-            csv-header="csvHeader" quote-strings="true">
-        Export</button>
-
-</form>
