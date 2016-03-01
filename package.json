@@ -1,6 +1,6 @@
 {
   "name": "dd",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "The Daily Declan",
   "main": "index.html",
   "dependencies": {},
@@ -14,8 +14,10 @@
     "gulp-uglify": "^1.4.2",
     "gulp-watch": "^4.3.5"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "scripts": {    
+    "postinstall": "node_modules/gulp/bin/gulp.js",
+    "postpublish" : "npm version patch",
+    "publish": "node_modules/firebase-tools/bin/firebase/deploy"
   },
   "repository": {
     "type": "git",

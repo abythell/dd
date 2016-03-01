@@ -21,8 +21,6 @@ Do this once to get everything setup:
 git clone https://github.com/abythell/dd.git
 cd dd
 npm install
-npm install -g gulp
-gulp
 ```
 
 Modifying and Debugging
@@ -39,16 +37,17 @@ Then, anytime a javascript file is saved, gulp will automatically output a new
 `dd.min.js`.
 
 For debugging purposes, it may be helpful to use the non-minified version,
-`dist/dd.js` by modifying `index.html`.
+`dist/dd.js` or the full versions of all scripts by modifying `index.html`.
 
 You can submit any changes, fixes, or improvements by creating a [git pull
 request](https://github.com/abythell/dd/pulls).
 
 Deploying
 ---------
-Publish the application to firebase by running
-`node_modules/firebase-tools/bin/firebase/deploy`.  If you want to publish to a
-database other than default, please see `firebase.json`.
+Publish the application to Firebase by running `npm publish`.  
+
+If you want to publish to a database other than default, please see 
+`firebase.json`.
 
 About
 -----
