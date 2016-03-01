@@ -30,6 +30,8 @@
                 var currentTime = new Date().getTime();
                 $scope.start = new Date(dateService.selectedDate).setTime(currentTime);
                 $scope.duration = 0;
+                $scope.what = '';
+                $scope.notes = '';
                 userService.getCurrentUser().$loaded().then(function (user) {
                     $scope.uuid = user.$id;
                     $scope.activity = seizureService.getSeizure(dateService.selectedDate);
@@ -48,15 +50,9 @@
                         notes: $scope.notes,
                         uuid: user.$id
                     };
-                    $scope.activity.$add(newActivity);
-                    
-                    /*
-                     * Reset the form.
-                     */
-                    $scope.what = '';
-                    $scope.start = new Date();
-                    $scope.duration = 0;
-                    $scope.notes = '';
+                    $scope.activity.$add(newActivity).then(function () {
+                        getActivity();
+                    });                    
                 });
             };
 
