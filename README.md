@@ -44,11 +44,11 @@ request](https://github.com/abythell/dd/pulls).
 
 Deploying
 ---------
-Publish the application to Firebase by running `npm run-script deploy`.  
+Publish the application to Firebase by running `npm run-script deploy`.  This will automatically increment the patch version, but you may need to push it remotely via `git push --tags`.
 
 If you want to publish to a database other than default, please see 
 `firebase.json`.
 
 About
 -----
-Copyright 2015 Trevor Patterson, Andrew Bythell.
+Copyright 20152016 Trevor Patterson, Andrew Bythell.
