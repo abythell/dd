@@ -48,8 +48,7 @@
                         duration: $scope.duration,
                         notes: $scope.notes,
                         uuid: user.$id
-                    };
-                    console.log(newActivity.start);
+                    };                    
                     $scope.activity.$add(newActivity).then(function () {
                         getActivity();
                     });                    
