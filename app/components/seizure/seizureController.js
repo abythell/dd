@@ -26,9 +26,8 @@
              * resets the form.  Called on initial load and whenever the date
              * changes.
              */
-            var getActivity = function () {
-                var currentTime = new Date().getTime();
-                $scope.start = new Date(dateService.selectedDate).setTime(currentTime);
+            var getActivity = function () {                
+                $scope.start = dateService.selectedDate;
                 $scope.duration = 0;
                 $scope.what = '';
                 $scope.notes = '';
@@ -45,11 +44,12 @@
                 userService.getCurrentUser().$loaded().then(function (user) {
                     var newActivity = {
                         who: user.name,
-                        start: $scope.start,
+                        start: Date.parse($scope.start),
                         duration: $scope.duration,
                         notes: $scope.notes,
                         uuid: user.$id
                     };
+                    console.log(newActivity.start);
                     $scope.activity.$add(newActivity).then(function () {
                         getActivity();
                     });                    
