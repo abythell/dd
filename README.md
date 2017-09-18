@@ -29,7 +29,7 @@ You can edit this project using any development tool of your choice, however
 the app was built using Netbeans and will open in Netbeans as an HTML5 project.
 
 `gulp` will combine and minify all javascript sources in the `app` directory and
-output to `./dist/dd.min.js`.  You will need to run `gulp` anytime you change a 
+output to `./dist/dd.min.js`.  You will need to run `gulp` anytime you change a
 javascript file to update `dd.min.js`.
 
 To run gulp automatically whenever a javascript file changes, run `gulp watch`.
@@ -42,13 +42,14 @@ For debugging purposes, it may be helpful to use the non-minified version,
 You can submit any changes, fixes, or improvements by creating a [git pull
 request](https://github.com/abythell/dd/pulls).
 
-Deploying
----------
-Publish the application to Firebase by running `npm run-script deploy`.  This will automatically increment the patch version, but you may need to push it remotely via `git push --tags`.
+Publishing and Deploying
+------------------------
+To create a new release, run `npm version patch|minor|major` to increment the
+version, create a git tag, and push to Github.
 
-If you want to publish to a database other than default, please see 
-`firebase.json`.
+To publish the application to Firebase: `npm run deploy`.  After publishing, users
+may need to refresh and/or clear caches.
 
 About
 -----
-Copyright 20152016 Trevor Patterson, Andrew Bythell.
+Copyright 2015 - 2017 Trevor Patterson, Andrew Bythell.
