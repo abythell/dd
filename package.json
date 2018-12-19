@@ -5,11 +5,18 @@
   "main": "index.html",
   "devDependencies": {
     "firebase-tools": "^6.1.2",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-rename": "^1.4.0",
+    "gulp-uglify": "^3.0.1",
     "standard": "^12.0.1"
   },
   "scripts": {
-    "deploy": "firebase deploy",
-    "dev": "concurrently \"firebase serve\" \"browser-sync start --proxy 'localhost:5000' --files 'app/**'\"",
+    "lint": "standard",
+    "minify": "npm run lint && gulp",
+    "deploy": "npm run minify && firebase deploy",
+    "dev": "npm run minify && firebase serve",
+    "preversion": "npm run minify",
     "postversion": "git push && git push --tags"
   },
   "repository": {

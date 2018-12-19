@@ -11,7 +11,7 @@ To modify, build, and/or publish this application, you'll need:
 
 * [node.js](https://nodejs.org/en/)
 * [git](http://git-scm.com/download/)
-* Some kind of development environment, like Netbeans or Notepad
+
 
 Setup the Development Environment
 ---------------------------------
@@ -25,22 +25,8 @@ npm install
 
 Modifying and Debugging
 -----------------------
-You can edit this project using any development tool of your choice, however
-the app was built using Netbeans and will open in Netbeans as an HTML5 project.
 
-`gulp` will combine and minify all javascript sources in the `app` directory and
-output to `./dist/dd.min.js`.  You will need to run `gulp` anytime you change a
-javascript file to update `dd.min.js`.
-
-To run gulp automatically whenever a javascript file changes, run `gulp watch`.
-Then, anytime a javascript file is saved, gulp will automatically output a new
-`dd.min.js`.
-
-For debugging purposes, it may be helpful to use the non-minified version,
-`dist/dd.js` or the full versions of all scripts by modifying `index.html`.
-
-You can submit any changes, fixes, or improvements by creating a [git pull
-request](https://github.com/abythell/dd/pulls).
+[TODO]
 
 Publishing and Deploying
 ------------------------
@@ -52,4 +38,4 @@ may need to refresh and/or clear caches.
 
 About
 -----
-Copyright 2015 - 2017 Trevor Patterson, Andrew Bythell.
+Copyright 2015 - 2018 Trevor Patterson, Andrew Bythell.
