@@ -9,7 +9,7 @@
   },
   "scripts": {
     "deploy": "firebase deploy",
-    "dev": "concurrently \"firebase serve\" \"browser-sync start --proxy 'localhost:5000' --files 'app/*'\"",
+    "dev": "concurrently \"firebase serve\" \"browser-sync start --proxy 'localhost:5000' --files 'app/**'\"",
     "postversion": "git push && git push --tags"
   },
   "repository": {

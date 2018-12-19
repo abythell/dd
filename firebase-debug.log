@@ -1,0 +1,29 @@
+[debug] [2018-12-19T19:03:48.569Z] ----------------------------------------------------------------------
+[debug] [2018-12-19T19:03:48.571Z] Command:       /usr/bin/node /home/abythell/Software/dd/node_modules/.bin/firebase serve
+[debug] [2018-12-19T19:03:48.571Z] CLI Version:   6.1.2
+[debug] [2018-12-19T19:03:48.571Z] Platform:      linux
+[debug] [2018-12-19T19:03:48.572Z] Node Version:  v8.14.0
+[debug] [2018-12-19T19:03:48.572Z] Time:          Wed Dec 19 2018 11:03:48 GMT-0800 (PST)
+[debug] [2018-12-19T19:03:48.572Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2018-12-19T19:03:48.578Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2018-12-19T19:03:48.578Z] > authorizing via signed-in user
+[debug] [2018-12-19T19:03:48.578Z] [iam] checking project brilliant-inferno-6689 for permissions ["firebase.projects.get"]
+[debug] [2018-12-19T19:03:48.580Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2018-12-19T19:03:48.580Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
+ <request body omitted>
+[debug] [2018-12-19T19:03:48.757Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-19T19:03:48.816Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/brilliant-inferno-6689:testIamPermissions  
+
+[debug] [2018-12-19T19:03:48.991Z] <<< HTTP RESPONSE 200
+[debug] [2018-12-19T19:03:48.992Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/brilliant-inferno-6689  
+ 
+[debug] [2018-12-19T19:03:49.191Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/home/abythell/Software/dd'...
+[info] 
+[debug] [2018-12-19T19:03:49.192Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/624733694286/clients/_:getWebAppConfig  
+ 
+[debug] [2018-12-19T19:03:49.405Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: ./
+[info] ✔  hosting: Local server: http://localhost:5000

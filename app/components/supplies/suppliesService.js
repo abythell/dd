@@ -1,12 +1,8 @@
-/* global angular Firebase */
+/* global angular firebase */
 (function () {
   angular.module('suppliesModule').service('suppliesService', ['$firebaseObject',
     '$filter', '$firebaseArray', function ($firebaseObject, $filter, $firebaseArray) {
-      /*
-             * URL of firebase app
-             */
-      var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com'
-      var ref = new Firebase(firebaseUrl)
+      var ref = firebase.database().ref()
 
       this.getSingleItemList = function () {
         return $firebaseArray(ref.child('config').child('supplies').child('single'))

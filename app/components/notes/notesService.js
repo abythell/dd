@@ -1,14 +1,9 @@
-/* global angular Firebase */
+/* global angular firebase */
 
 (function () {
   angular.module('notesModule').service('notesService', ['$firebaseArray',
     '$filter', function ($firebaseArray, $filter) {
-      /*
-                 * URL of firebase app
-                 */
-      var firebaseUrl = 'https://brilliant-inferno-6689.firebaseio.com'
-      var ref = new Firebase(firebaseUrl)
-
+      var ref = firebase.database().ref()
       this.getNotes = function (date) {
         var key = $filter('date')(date, 'yyyy-MM-dd')
         return $firebaseArray(ref.child('notes').child(key))
