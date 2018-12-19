@@ -19,7 +19,9 @@
       var getNotes = function () {
         userService.getCurrentUser().$loaded().then(function (user) {
           $scope.uuid = user.$id
-          $scope.notes = notesService.getNotes(dateService.selectedDate)
+          notesService.getNotes(dateService.selectedDate).$loaded().then(function (notes) {
+            $scope.notes = notes
+          })
         })
       }
 

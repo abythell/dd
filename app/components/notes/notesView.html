@@ -1,6 +1,6 @@
 <h2>General Notes</h2>
 <ul class="list-group">
-    <li class="list-group-item" ng-repeat="note in notes track by $index | orderBy:'when'">                        
+    <li class="list-group-item" ng-repeat="note in notes | orderBy:'when'">                        
         <div class="list-group-item-text">
             <em>
                 {{note.who}}, {{note.when| date:'hh:mm a'}}&nbsp-&nbsp;
@@ -9,21 +9,21 @@
             <button type="button" class="btn badge pull-right" ng-show="canEdit && note.uuid === uuid"
                     ng-click="notes.$remove(note)">
                 <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-            </button>            
+            </button>
         </div>
 
     </li>
-</ul>    
+</ul>
 
-<form name="noteForm" ng-submit="noteForm.$valid && notesCtrl.addNote(what)" 
-      novalidate ng-show="canEdit">                  
+<form name="noteForm" ng-submit="noteForm.$valid && notesCtrl.addNote(what)"
+      novalidate ng-show="canEdit">
 
-    <div class="form-group">                
-        <label for="inputWhat" class="sr-only">What</label>                     
+    <div class="form-group">
+        <label for="inputWhat" class="sr-only">What</label>
         <textarea class="form-control" id="inputWhat" ng-model="what" placeholder="What do you have to add?" required>
         </textarea>
     </div>
-    <div class="form-group">                
+    <div class="form-group">
         <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!noteForm.$valid">Add</button>
-    </div>           
-</form>        
+    </div>
+</form>

@@ -30,10 +30,13 @@
         $scope.start = dateService.selectedDate
         $scope.duration = 0
         $scope.what = ''
-        $scope.notes = ''
+        $scope.observations = ''
         userService.getCurrentUser().$loaded().then(function (user) {
           $scope.uuid = user.$id
-          $scope.activity = seizureService.getSeizure(dateService.selectedDate)
+          seizureService.getSeizure(dateService.selectedDate).$loaded().then(function (activity) {
+            $scope.activity = activity
+            console.log($scope.observations)
+          })
         })
       }
 
@@ -46,7 +49,7 @@
             who: user.name,
             start: Date.parse($scope.start),
             duration: $scope.duration,
-            notes: $scope.notes,
+            notes: $scope.observations,
             uuid: user.$id
           }
           $scope.activity.$add(newActivity).then(function () {
@@ -55,10 +58,6 @@
         })
       }
 
-      /*
-             * Fetch new data when the date changes - this includes the
-             * initial load.
-             */
       $scope.$watch(function () {
         return dateService.selectedDate
       }, function () {
