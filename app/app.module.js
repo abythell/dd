@@ -54,7 +54,7 @@
         templateUrl: 'app/partials/view.html',
         resolve: {
           'currentAuth': ['loginService', function (loginService) {
-            return loginService.$requireAuth()
+            return loginService.$requireSignIn()
           }]
         }
       })
@@ -65,7 +65,7 @@
         templateUrl: 'app/partials/reset.html',
         resolve: {
           'currentAuth': ['loginService', function (loginService) {
-            return loginService.$requireAuth()
+            return loginService.$requireSignIn()
           }]
         }
       })
@@ -73,7 +73,7 @@
         templateUrl: 'app/partials/admin.html',
         resolve: {
           'currentAuth': ['loginService', function (loginService) {
-            return loginService.$requireAuth()
+            return loginService.$requireSignIn()
           }],
           'isAdmin': ['userService', '$q', function (userService, $q) {
             var deferred = $q.defer()
