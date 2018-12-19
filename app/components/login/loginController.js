@@ -9,21 +9,14 @@
 
       this.login = function () {
         $scope.error = null
-
-        var credentials = {
-          email: this.email,
-          password: this.password
-        }
-
-        loginService.$authWithPassword(credentials).then(
-          function (authData) {
-            if (authData.password.isTemporaryPassword) {
-              $location.path('/reset')
-            } else {
-              $cookies.put('lastuser', authData.password.email)
-              $location.path('/view')
-            }
-          }).catch(function (error) {
+        loginService.$signInWithEmailAndPassword(this.email, this.password).then(function (authData) {
+          if (authData.isTemporaryPassword) {
+            $location.path('/reset')
+          } else {
+            $cookies.put('lastuser', authData.email)
+            $location.path('/view')
+          }
+        }).catch(function (error) {
           $scope.error = error.message
         })
       }
@@ -38,13 +31,8 @@
       this.resetPassword = function () {
         $scope.error = null
         $scope.success = null
-
-        var credentials = {
-          email: this.email
-        }
-
-        loginService.$resetPassword(credentials).then(function () {
-          $scope.success = 'Password reset sent to ' + credentials.email
+        loginService.$sendPasswordResetEmail(this.email).then(function () {
+          $scope.success = 'Password reset sent to ' + this.email
         }).catch(function (error) {
           $scope.error = 'Reset failed: ' + error.message
         })
@@ -55,22 +43,11 @@
     'loginService', '$location', 'userService', function ($scope,
       loginService, $location, userService) {
       $scope.location = $location
-
-      /**
-             * Update when auth state changes.
-             */
-      loginService.$onAuth(function (authData) {
+      loginService.$onAuthStateChanged(function (authData) {
         $scope.authData = authData
         if (!authData) {
-          /*
-                     * No longer authorized, logout.
-                     */
           $location.path('/login')
         } else {
-          /*
-                     * Set the user's name if known, otherwise use the login
-                     * email address.
-                     */
           userService.getUser(authData.uid).$loaded().then(function (data) {
             if (!data.active) {
               $scope.signout()
@@ -78,7 +55,7 @@
               $scope.username = data.name
               $scope.isAdmin = data.admin
               if (!$scope.username) {
-                $scope.username = authData.password.email
+                $scope.username = authData.email
               }
             }
           })
@@ -86,8 +63,11 @@
       })
 
       $scope.signout = function () {
-        loginService.$unauth()
-        $location.path('/login')
+        loginService.$signOut().then(function () {
+          $location.path('/login')
+        }).catch((err) => {
+          $scope.error = err.message
+        })
       }
     }])
 
@@ -98,14 +78,7 @@
           $scope.error = "New passwords don't match"
           return
         }
-
-        var credentials = {
-          email: $scope.email,
-          oldPassword: $scope.old,
-          newPassword: $scope.new1
-        }
-
-        loginService.$changePassword(credentials).then(function () {
+        loginService.$updatePassword($scope.new1).then(function () {
           $location.path('/view')
         }).catch(function (error) {
           $scope.error = error.message
