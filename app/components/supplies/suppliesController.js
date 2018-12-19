@@ -3,17 +3,28 @@
   angular.module('suppliesModule').controller('SuppliesController', ['suppliesService',
     'dateService', '$scope', 'userService', function (suppliesService,
       dateService, $scope, userService) {
-      suppliesService.getSingleItemList().$loaded().then(function (items) {
-        $scope.singleItems = items
-      })
-
-      suppliesService.getMultiItemList().$loaded().then(function (items) {
-        $scope.multiItems = items
-      })
-
-      suppliesService.getSettings().$loaded().then(function (settings) {
-        $scope.settings = settings
-      })
+      this.$onInit = function () {
+        Promise.all([
+          suppliesService.getSingleItemList().$loaded().then(function (items) {
+            $scope.singleItems = items
+          }),
+          suppliesService.getMultiItemList().$loaded().then(function (items) {
+            $scope.multiItems = items
+          }),
+          suppliesService.getSettings().$loaded().then(function (settings) {
+            $scope.settings = settings
+          })
+        ]).then(() => {
+          // Fetch new data when the date changes - this includes the initial load
+          $scope.$watch(function () {
+            return dateService.selectedDate
+          }, function () {
+            updateAmSupplies()
+            updatePmSupplies()
+            setEditable()
+          }, true)
+        })
+      }
 
       /*
              * Determine if the supplies for this day can be changed or not.
@@ -33,8 +44,7 @@
         obj.$loaded().then(function () {
           $scope.amSupplies = obj
           for (var i = 0; i < $scope.multiItems.length; i++) {
-            $scope.amSupplies[$scope.multiItems[i].$value] =
-                                $scope.amSupplies[$scope.multiItems[i].$value] || 0
+            $scope.amSupplies[$scope.multiItems[i].$value] = $scope.amSupplies[$scope.multiItems[i].$value] || 0
           }
         })
       }
@@ -44,22 +54,9 @@
         obj.$loaded().then(function () {
           $scope.pmSupplies = obj
           for (var i = 0; i < $scope.multiItems.length; i++) {
-            $scope.pmSupplies[$scope.multiItems[i].$value] =
-                                $scope.pmSupplies[$scope.multiItems[i].$value] || 0
+            $scope.pmSupplies[$scope.multiItems[i].$value] = $scope.pmSupplies[$scope.multiItems[i].$value] || 0
           }
         })
       }
-
-      /*
-             * Fetch new data when the date changes - this includes the
-             * initial load.
-             */
-      $scope.$watch(function () {
-        return dateService.selectedDate
-      }, function () {
-        updateAmSupplies()
-        updatePmSupplies()
-        setEditable()
-      }, true)
     }])
 })()
