@@ -34,7 +34,6 @@ angular.module('seizureModule').controller('SeizureController', ['dateService',
         $scope.uuid = user.$id
         seizureService.getSeizure(dateService.selectedDate).$loaded().then(function (activity) {
           $scope.activity = activity
-          console.log($scope.observations)
         })
       })
     }
