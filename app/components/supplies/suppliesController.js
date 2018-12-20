@@ -19,8 +19,8 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
         $scope.$watch(function () {
           return dateService.selectedDate
         }, function () {
-          updateAmSupplies()
-          updatePmSupplies()
+          $scope.amSupplies = suppliesService.getSupplies(dateService.selectedDate, 'am')
+          $scope.pmSupplies = suppliesService.getSupplies(dateService.selectedDate, 'pm')
           setEditable()
         }, true)
       })
@@ -34,13 +34,5 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
           $scope.canEdit = false
         }
       })
-    }
-
-    var updateAmSupplies = function () {
-      suppliesService.getSupplies(dateService.selectedDate, 'am').$bindTo($scope, 'amSupplies')
-    }
-
-    var updatePmSupplies = function () {
-      suppliesService.getSupplies(dateService.selectedDate, 'pm').$bindTo($scope, 'pmSupplies')
     }
   }])

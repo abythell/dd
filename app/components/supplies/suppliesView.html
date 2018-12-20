@@ -2,7 +2,7 @@
 <div class="row">
 
   <div class="col-sm-4" ng-repeat="item in singleItems">
-    <button type="button" class="btn btn-block" uib-btn-checkbox ng-model="amSupplies[item.$value]" ng-class="amSupplies[item.$value] ? 'btn-primary' : ''" ng-disabled="!canEdit">
+    <button type="button" class="btn btn-block" uib-btn-checkbox ng-model="amSupplies[item.$value]" ng-class="amSupplies[item.$value] ? 'btn-primary' : ''" ng-change="amSupplies.$save()" ng-disabled="!canEdit">
       {{item.$value}}
     </button>
     <br />
@@ -17,7 +17,7 @@
   <div ng-repeat="item in multiItems" class="col-sm-4">
     <div class="input-group">
       <div class="input-group-addon btn" ng-class="{'primary': amSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</div>
-      <div class="form-control" uib-rating ng-model="amSupplies[item.$value]" max="{{settings.maxQty}}"></div>
+      <div class="form-control" uib-rating ng-model="amSupplies[item.$value]" max="{{settings.maxQty}}" ng-change="amSupplies.$save()"></div>
       <div class="input-group-addon">Qty: {{amSupplies[item.$value] || 0}}</div>
     </div>
   </div>
@@ -28,7 +28,7 @@
 
 <div class="row">
   <div class="col-sm-4" ng-repeat="item in singleItems">
-    <button type="button" class="btn btn-block" uib-btn-checkbox ng-model="pmSupplies[item.$value]" ng-class="pmSupplies[item.$value] ? 'btn-primary' : ''" ng-disabled="!canEdit">
+    <button type="button" class="btn btn-block" uib-btn-checkbox ng-model="pmSupplies[item.$value]" ng-class="pmSupplies[item.$value] ? 'btn-primary' : ''" ng-change="pmSupplies.$save()" ng-disabled="!canEdit">
       {{item.$value}}
     </button>
     <br />
@@ -39,7 +39,7 @@
   <div ng-repeat="item in multiItems" class="col-sm-4">
     <div class="input-group">
       <div class="input-group-addon btn" ng-class="{'primary': pmSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</div>
-      <div class="form-control" uib-rating ng-model="pmSupplies[item.$value]" max="{{settings.maxQty}}"></div>
+      <div class="form-control" uib-rating ng-model="pmSupplies[item.$value]" max="{{settings.maxQty}}" ng-change="pmSupplies.$save()"></div>
       <div class="input-group-addon">Qty: {{pmSupplies[item.$value] || 0}}</div>
     </div>
   </div>
