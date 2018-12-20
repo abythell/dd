@@ -26,9 +26,6 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
       })
     }
 
-    /*
-             * Determine if the supplies for this day can be changed or not.
-             */
     var setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin | dateService.isToday()) {
@@ -40,22 +37,10 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
     }
 
     var updateAmSupplies = function () {
-      var obj = suppliesService.getSupplies(dateService.selectedDate, 'am')
-      obj.$loaded().then(function () {
-        $scope.amSupplies = obj
-        for (var i = 0; i < $scope.multiItems.length; i++) {
-          $scope.amSupplies[$scope.multiItems[i].$value] = $scope.amSupplies[$scope.multiItems[i].$value] || 0
-        }
-      })
+      suppliesService.getSupplies(dateService.selectedDate, 'am').$bindTo($scope, 'amSupplies')
     }
 
     var updatePmSupplies = function () {
-      var obj = suppliesService.getSupplies(dateService.selectedDate, 'pm')
-      obj.$loaded().then(function () {
-        $scope.pmSupplies = obj
-        for (var i = 0; i < $scope.multiItems.length; i++) {
-          $scope.pmSupplies[$scope.multiItems[i].$value] = $scope.pmSupplies[$scope.multiItems[i].$value] || 0
-        }
-      })
+      suppliesService.getSupplies(dateService.selectedDate, 'pm').$bindTo($scope, 'pmSupplies')
     }
   }])
