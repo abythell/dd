@@ -1,6 +1,6 @@
 <h2>Day Care Supplies</h2>
-<div class="row">
 
+<div class="row">
   <div class="col-sm-4" ng-repeat="item in singleItems">
     <button type="button" class="btn btn-block" uib-btn-checkbox ng-model="amSupplies[item.$value]" ng-class="amSupplies[item.$value] ? 'btn-primary' : ''" ng-change="amSupplies.$save()" ng-disabled="!canEdit">
       {{item.$value}}
@@ -10,15 +10,26 @@
 
   <div class="col-sm-4">
     <button type="button" class="btn btn-block" ng-model="uhf" uib-btn-checkbox ng-click="uhfOpen()" ng-disabled="!canEdit">UHF</button>
+    <br />
   </div>
-</div>
 
-<div class="row">
-  <div ng-repeat="item in multiItems" class="col-sm-4">
-    <div class="input-group">
-      <div class="input-group-addon btn" ng-class="{'primary': amSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</div>
-      <div class="form-control" uib-rating ng-model="amSupplies[item.$value]" max="{{settings.maxQty}}" ng-change="amSupplies.$save()"></div>
-      <div class="input-group-addon">Qty: {{amSupplies[item.$value] || 0}}</div>
+  <div ng-repeat="item in multiItems track by item.$value">
+    <div class="col-sm-4">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="button" class="btn" ng-class="{'btn-primary': amSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</button>
+        </span>
+        <input  readonly="readonly" type="number" class="form-control" ng-model="amSupplies[item.$value]">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-secondary" ng-click="decrement(amSupplies, item.$value)">
+            <i class="glyphicon glyphicon-chevron-down"></i>
+          </button>
+          <button type="button" class="btn btn-secondary" ng-click="increment(amSupplies, item.$value)">
+            <i class="glyphicon glyphicon-chevron-up"></i>
+          </button>
+        </span>
+      </div>
+      <br />
     </div>
   </div>
 </div>
@@ -33,14 +44,25 @@
     </button>
     <br />
   </div>
-</div>
-
-<div class="row">
-  <div ng-repeat="item in multiItems" class="col-sm-4">
-    <div class="input-group">
-      <div class="input-group-addon btn" ng-class="{'primary': pmSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</div>
-      <div class="form-control" uib-rating ng-model="pmSupplies[item.$value]" max="{{settings.maxQty}}" ng-change="pmSupplies.$save()"></div>
-      <div class="input-group-addon">Qty: {{pmSupplies[item.$value] || 0}}</div>
+  <div ng-repeat="item in multiItems track by item.$value">
+    <div class="col-sm-4">
+      <div class="input-group">
+        <span class="input-group-btn">
+          <button type="button" class="btn" ng-class="{'btn-primary': pmSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</button>
+        </span>
+        <input  readonly="readonly" type="number" class="form-control" ng-model="pmSupplies[item.$value]">
+        <span class="input-group-btn">
+          <button type="button" class="btn btn-secondary" ng-click="decrement(pmSupplies, item.$value)">
+            <i class="glyphicon glyphicon-chevron-down"></i>
+          </button>
+          <button type="button" class="btn btn-secondary" ng-click="increment(pmSupplies, item.$value)">
+            <i class="glyphicon glyphicon-chevron-up"></i>
+          </button>
+        </span>
+      </div>
+      <br />
     </div>
   </div>
 </div>
+
+<br/>
