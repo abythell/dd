@@ -19,7 +19,7 @@
         <span class="input-group-btn">
           <button type="button" class="btn" ng-class="{'btn-primary': amSupplies[item.$value] > 0, 'disabled': !canEdit}">{{item.$value}}</button>
         </span>
-        <input  readonly="readonly" type="number" class="form-control" ng-model="amSupplies[item.$value]">
+        <input  readonly="readonly" type="text" class="form-control" ng-model="amSupplies[item.$value]">
         <span class="input-group-btn">
           <button type="button" class="btn btn-secondary" ng-click="decrement(amSupplies, item.$value)">
             <i class="glyphicon glyphicon-chevron-down"></i>
