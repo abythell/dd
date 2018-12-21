@@ -4,18 +4,21 @@
   "description": "The Daily Declan",
   "main": "index.html",
   "devDependencies": {
+    "browser-sync": "^2.26.3",
+    "concurrently": "^4.1.0",
     "firebase-tools": "^6.1.2",
     "gulp": "^4.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^1.4.0",
     "gulp-uglify": "^3.0.1",
+    "nodemon": "^1.18.9",
     "standard": "^12.0.1"
   },
   "scripts": {
     "lint": "standard",
     "minify": "npm run lint && gulp",
     "deploy": "npm run minify && firebase deploy",
-    "dev": "npm run minify && firebase serve",
+    "dev": "concurrently \"firebase serve\" \"nodemon --ignore 'dist/*.js' --exec npm run minify\" \"browser-sync start --proxy 'localhost:5000' --files 'app/**'\"",
     "preversion": "npm run minify",
     "postversion": "git push && git push --tags"
   },
