@@ -1,5 +1,6 @@
 {
   "projects": {
-    "dd": "brilliant-inferno-6689"
+    "dd": "brilliant-inferno-6689",
+    "default": "brilliant-inferno-6689"
   }
 }

@@ -5,7 +5,7 @@
       "**/.*",
       "app/**/*.js",
       "firebase.json",
-      "gulpfile.js",      
+      "gulpfile.js",
       "node_modules/**",
       "package.json",
       "README.md",
