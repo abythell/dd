@@ -7,13 +7,13 @@ admin.initializeApp()
  * login is created.
  */
 exports.createUser = functions.auth.user().onCreate((user) => {
-  let profile = {
+  const profile = {
     name: 'NEW USER',
     email: user.email,
     active: true,
     admin: false
   }
-  let userRef = admin.database().ref().child('users').child(user.uid)
+  const userRef = admin.database().ref().child('users').child(user.uid)
   return userRef.set(profile)
 })
 

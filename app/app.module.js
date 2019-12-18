@@ -53,7 +53,7 @@
       .when('/view', {
         templateUrl: 'app/partials/view.html',
         resolve: {
-          'currentAuth': ['loginService', function (loginService) {
+          currentAuth: ['loginService', function (loginService) {
             return loginService.$requireSignIn()
           }]
         }
@@ -64,7 +64,7 @@
       .when('/reset', {
         templateUrl: 'app/partials/reset.html',
         resolve: {
-          'currentAuth': ['loginService', function (loginService) {
+          currentAuth: ['loginService', function (loginService) {
             return loginService.$requireSignIn()
           }]
         }
@@ -72,10 +72,10 @@
       .when('/admin', {
         templateUrl: 'app/partials/admin.html',
         resolve: {
-          'currentAuth': ['loginService', function (loginService) {
+          currentAuth: ['loginService', function (loginService) {
             return loginService.$requireSignIn()
           }],
-          'isAdmin': ['userService', '$q', function (userService, $q) {
+          isAdmin: ['userService', '$q', function (userService, $q) {
             var deferred = $q.defer()
             userService.getCurrentUser().$loaded().then(function (data) {
               if (data.admin) {
