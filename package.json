@@ -18,7 +18,7 @@
     "lint": "standard",
     "minify": "npm run lint && gulp",
     "deploy": "npm run minify && firebase deploy",
-    "dev": "concurrently \"firebase serve --host 0.0.0.0\" \"nodemon --ignore 'dist/*.js' --exec npm run minify\" \"browser-sync start --proxy 'localhost:5000' --files 'app/**'\"",
+    "dev": "concurrently \"firebase serve --host 0.0.0.0\" \"nodemon --ignore 'dist/*.js' --exec npm run minify\" \"browser-sync start --port 4999 --proxy 'localhost:5000' --files 'app/**'\"",
     "preversion": "npm run minify",
     "postversion": "git push && git push --tags"
   },
