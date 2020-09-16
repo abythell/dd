@@ -4,21 +4,22 @@
   "description": "The Daily Declan",
   "main": "index.html",
   "devDependencies": {
-    "browser-sync": "^2.26.7",
-    "concurrently": "^5.0.2",
-    "firebase-tools": "^7.11.0",
+    "browser-sync": "^2.26.12",
+    "concurrently": "^5.3.0",
+    "firebase-tools": "^7.16.2",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^2.0.0",
     "gulp-uglify": "^3.0.2",
-    "nodemon": "^2.0.2",
-    "standard": "^14.3.1"
+    "nodemon": "^2.0.4",
+    "standard": "^14.3.4"
   },
   "scripts": {
     "lint": "standard",
     "minify": "npm run lint && gulp",
     "deploy": "npm run minify && firebase deploy",
-    "dev": "concurrently \"firebase serve --host 0.0.0.0\" \"nodemon --ignore 'dist/*.js' --exec npm run minify\" \"browser-sync start --port 4999 --proxy 'localhost:5000' --files 'app/**'\"",
+    "dev": "concurrently \"firebase serve --host 0.0.0.0\" \"nodemon --ignore \"dist/*.js\" --exec npm run minify\" \"browser-sync start --port 4999 --proxy 'localhost:5000' --files 'app/**'\"",
+    "dev2": "nodemon --ignore 'dist/*.js' --exec npm run minify",
     "preversion": "npm run minify",
     "postversion": "git push && git push --tags"
   },
@@ -33,7 +34,7 @@
   },
   "homepage": "https://github.com/abythell/dd#readme",
   "dependencies": {
-    "firebase-admin": "^8.9.0",
-    "firebase-functions": "^3.3.0"
+    "firebase-admin": "^8.13.0",
+    "firebase-functions": "^3.11.0"
   }
 }
