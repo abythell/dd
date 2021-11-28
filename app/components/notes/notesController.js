@@ -6,7 +6,7 @@ angular.module('notesModule').controller('NotesController', ['dateService',
     /*
              * Determine if the notes for this day can be changed or not.
              */
-    var setEditable = function () {
+    const setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin | dateService.isToday()) {
           $scope.canEdit = true
@@ -16,7 +16,7 @@ angular.module('notesModule').controller('NotesController', ['dateService',
       })
     }
 
-    var getNotes = function () {
+    const getNotes = function () {
       userService.getCurrentUser().$loaded().then(function (user) {
         $scope.uuid = user.$id
         notesService.getNotes(dateService.selectedDate).$loaded().then(function (notes) {
@@ -27,8 +27,8 @@ angular.module('notesModule').controller('NotesController', ['dateService',
 
     this.addNote = function (what) {
       userService.getCurrentUser().$loaded().then(function (user) {
-        var date = new Date().getTime()
-        var newNote = {
+        const date = new Date().getTime()
+        const newNote = {
           what: what,
           when: date,
           who: user.name,

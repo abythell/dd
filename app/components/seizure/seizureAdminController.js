@@ -4,7 +4,7 @@ angular.module('seizureModule').controller('SeizureAdminController', SeizureAdmi
 SeizureAdminController.$inject = ['$scope', 'seizureService', '$q', '$filter']
 
 function SeizureAdminController ($scope, seizureService, $q, $filter) {
-  var seizureAdminCtrl = this
+  const seizureAdminCtrl = this
   seizureAdminCtrl.export = exportCSV
 
   /*
@@ -28,8 +28,8 @@ function SeizureAdminController ($scope, seizureService, $q, $filter) {
          * Create a promise that resolves with the requested activity data.
          */
   function exportCSV () {
-    var defer = $q.defer()
-    var csvData = []
+    const defer = $q.defer()
+    const csvData = []
 
     /*
              * Loop through every day between the start and end dates, creating
@@ -37,11 +37,11 @@ function SeizureAdminController ($scope, seizureService, $q, $filter) {
              * array once resolved.
              */
     /* jshint -W083 */
-    var promises = []
-    for (var d = new Date($scope.startDate); d <= $scope.endDate; d.setDate(d.getDate() + 1)) {
-      var promise = seizureService.getSeizure(d).$loaded().then(function (data) {
-        for (var i = 0; i < data.length; i++) {
-          var activity = {
+    const promises = []
+    for (let d = new Date($scope.startDate); d <= $scope.endDate; d.setDate(d.getDate() + 1)) {
+      const promise = seizureService.getSeizure(d).$loaded().then(function (data) {
+        for (let i = 0; i < data.length; i++) {
+          const activity = {
             date: $filter('date')(data[i].start, 'yyyy-MM-dd'),
             time: $filter('date')(data[i].start, 'HH:mm'),
             duration: data[i].duration,

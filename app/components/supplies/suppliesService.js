@@ -2,7 +2,7 @@
 
 angular.module('suppliesModule').service('suppliesService', ['$firebaseObject',
   '$filter', '$firebaseArray', function ($firebaseObject, $filter, $firebaseArray) {
-    var ref = firebase.database().ref()
+    const ref = firebase.database().ref()
 
     this.getSingleItemList = function () {
       return $firebaseArray(ref.child('config').child('supplies').child('single'))
@@ -17,7 +17,7 @@ angular.module('suppliesModule').service('suppliesService', ['$firebaseObject',
     }
 
     this.getSupplies = function (date, tod) {
-      var key = $filter('date')(date, 'yyyy-MM-dd')
+      const key = $filter('date')(date, 'yyyy-MM-dd')
       return $firebaseObject(ref.child('supplies').child(key).child(tod))
     }
   }])

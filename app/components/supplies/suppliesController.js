@@ -26,7 +26,7 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
       })
     }
 
-    var setEditable = function () {
+    const setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin | dateService.isToday()) {
           $scope.canEdit = true
@@ -37,14 +37,14 @@ angular.module('suppliesModule').controller('SuppliesController', ['suppliesServ
     }
 
     $scope.increment = function (obj, index) {
-      var value = obj[index] || 0
+      let value = obj[index] || 0
       value = (value < $scope.settings.maxQty) ? value + 1 : $scope.settings.maxQty
       obj[index] = value
       obj.$save()
     }
 
     $scope.decrement = function (obj, index) {
-      var value = obj[index] || 0
+      let value = obj[index] || 0
       value = (value === 0) ? 0 : value - 1
       obj[index] = value
       obj.$save()

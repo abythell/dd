@@ -10,7 +10,7 @@ angular.module('seizureModule').controller('SeizureController', ['dateService',
              * can delete any observations they have recorded.  Other users
              * can only delete observations made by them "today".
              */
-    var setEditable = function () {
+    const setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin | dateService.isToday()) {
           $scope.canEdit = true
@@ -25,7 +25,7 @@ angular.module('seizureModule').controller('SeizureController', ['dateService',
              * resets the form.  Called on initial load and whenever the date
              * changes.
              */
-    var getActivity = function () {
+    const getActivity = function () {
       $scope.start = dateService.selectedDate
       $scope.duration = 0
       $scope.what = ''
@@ -43,7 +43,7 @@ angular.module('seizureModule').controller('SeizureController', ['dateService',
              */
     this.addActivity = function () {
       userService.getCurrentUser().$loaded().then(function (user) {
-        var newActivity = {
+        const newActivity = {
           who: user.name,
           start: Date.parse($scope.start),
           duration: $scope.duration,

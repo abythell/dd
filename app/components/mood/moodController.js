@@ -10,13 +10,13 @@ angular.module('moodModule').controller('MoodController', ['moodService',
     /**
              * Asyncronously load the mood data for the selected date.
              */
-    var updateMood = function () {
-      var moodAM = moodService.getMoods(dateService.selectedDate, 'am')
+    const updateMood = function () {
+      const moodAM = moodService.getMoods(dateService.selectedDate, 'am')
       moodAM.$loaded().then(function (data) {
         $scope.moodAM = data
       })
 
-      var moodPM = moodService.getMoods(dateService.selectedDate, 'pm')
+      const moodPM = moodService.getMoods(dateService.selectedDate, 'pm')
       moodPM.$loaded().then(function (data) {
         $scope.moodPM = data
       })
@@ -27,7 +27,7 @@ angular.module('moodModule').controller('MoodController', ['moodService',
              * administrator in which case they can edit any day.
              * @returns {undefined}
              */
-    var setEditable = function () {
+    const setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin | dateService.isToday()) {
           $scope.canEdit = true

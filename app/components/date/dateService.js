@@ -4,8 +4,8 @@ angular.module('dateModule').service('dateService', [function () {
   this.selectedDate = new Date()
 
   this.isToday = function () {
-    var today = new Date().toDateString()
-    var selected = this.selectedDate.toDateString()
+    const today = new Date().toDateString()
+    const selected = this.selectedDate.toDateString()
     return (selected === today)
   }
 

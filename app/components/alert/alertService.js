@@ -2,9 +2,9 @@
 
 angular.module('alertModule').service('alertService', ['$firebaseObject',
   '$filter', function ($firebaseObject, $filter) {
-    var ref = firebase.database().ref()
+    const ref = firebase.database().ref()
     this.getAlert = function (date, tod) {
-      var key = $filter('date')(date, 'yyyy-MM-dd')
+      const key = $filter('date')(date, 'yyyy-MM-dd')
       return $firebaseObject(ref.child('alerts').child(key))
     }
 

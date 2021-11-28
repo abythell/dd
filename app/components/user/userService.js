@@ -2,8 +2,8 @@
 
 angular.module('userModule').factory('userService', ['$firebaseObject',
   'loginService', function ($firebaseObject, loginService) {
-    var userService = {}
-    var ref = firebase.database().ref()
+    const userService = {}
+    const ref = firebase.database().ref()
 
     /**
        * Get the firebaseObject for a user
@@ -19,7 +19,7 @@ angular.module('userModule').factory('userService', ['$firebaseObject',
        * @returns firebaseObject or null if no user is logged in.
        */
     userService.getCurrentUser = function () {
-      var authData = loginService.$getAuth()
+      const authData = loginService.$getAuth()
       if (authData) {
         return $firebaseObject(ref.child('users').child(authData.uid))
       } else {
@@ -36,7 +36,7 @@ angular.module('userModule').factory('userService', ['$firebaseObject',
        * @returns A promise resolved with a boolean admin status.
        */
     userService.isCurrentUserAdmin = function () {
-      var user = userService.getCurrentUser()
+      const user = userService.getCurrentUser()
       return user.$loaded().then(function (data) {
         return data.admin
       })

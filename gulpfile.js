@@ -1,7 +1,7 @@
-var gulp = require('gulp')
-var uglify = require('gulp-uglify')
-var rename = require('gulp-rename')
-var concat = require('gulp-concat')
+const gulp = require('gulp')
+const uglify = require('gulp-uglify')
+const rename = require('gulp-rename')
+const concat = require('gulp-concat')
 
 gulp.task('default', function () {
   return gulp.src('./app/**/*.js')

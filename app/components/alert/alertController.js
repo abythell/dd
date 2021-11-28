@@ -6,7 +6,7 @@ angular.module('alertModule').controller('AlertController', ['alertService',
     /*
              * Load the default message from the data store.
              */
-    var defaultMessage = ''
+    let defaultMessage = ''
     alertService.getDefaultMessage().$loaded().then(function (msg) {
       defaultMessage = msg
     })
@@ -89,8 +89,8 @@ angular.module('alertModule').controller('AlertController', ['alertService',
     /**
              * Asyncronously load the alert data for the selected date.
              */
-    var updateAlert = function () {
-      var alert = alertService.getAlert(dateService.selectedDate)
+    const updateAlert = function () {
+      const alert = alertService.getAlert(dateService.selectedDate)
       alert.$loaded().then(function (data) {
         $scope.alert = data
         if (data.$value === null) {
@@ -105,7 +105,7 @@ angular.module('alertModule').controller('AlertController', ['alertService',
     /**
              * Alerts can only be edited by admins.
              */
-    var setEditable = function () {
+    const setEditable = function () {
       userService.isCurrentUserAdmin().then(function (admin) {
         if (admin) {
           $scope.canEdit = true

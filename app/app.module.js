@@ -15,7 +15,7 @@
 
   // TODO: assign dependencies to specific modules.
 
-  var app = angular.module('appDD', ['dateModule',
+  const app = angular.module('appDD', ['dateModule',
     'notesModule',
     'moodModule',
     'ui.bootstrap',
@@ -76,7 +76,7 @@
             return loginService.$requireSignIn()
           }],
           isAdmin: ['userService', '$q', function (userService, $q) {
-            var deferred = $q.defer()
+            const deferred = $q.defer()
             userService.getCurrentUser().$loaded().then(function (data) {
               if (data.admin) {
                 deferred.resolve()
