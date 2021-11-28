@@ -4,14 +4,14 @@
   "description": "The Daily Declan",
   "main": "index.html",
   "devDependencies": {
-    "browser-sync": "^2.26.12",
-    "concurrently": "^5.3.0",
-    "firebase-tools": "^8.10.0",
+    "browser-sync": "^2.27.7",
+    "concurrently": "^6.4.0",
+    "firebase-tools": "^9.23.0",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-rename": "^2.0.0",
     "gulp-uglify": "^3.0.2",
-    "nodemon": "^2.0.4",
+    "nodemon": "^2.0.15",
     "standard": "^16.0.4"
   },
   "scripts": {
@@ -34,7 +34,7 @@
   },
   "homepage": "https://github.com/abythell/dd#readme",
   "dependencies": {
-    "firebase-admin": "^9.2.0",
-    "firebase-functions": "^3.11.0"
+    "firebase-admin": "^10.0.0",
+    "firebase-functions": "^3.16.0"
   }
 }
