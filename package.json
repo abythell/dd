@@ -4,7 +4,7 @@
   "description": "The Daily Declan",
   "main": "index.html",
   "devDependencies": {
-    "firebase-tools": "^9.23.0",
+    "firebase-tools": "^10.2.1",
     "gulp": "^4.0.2",
     "gulp-concat": "^2.6.1",
     "gulp-minify": "^3.1.0",
@@ -28,9 +28,5 @@
   "bugs": {
     "url": "https://github.com/abythell/dd/issues"
   },
-  "homepage": "https://github.com/abythell/dd#readme",
-  "dependencies": {
-    "firebase-admin": "^10.0.0",
-    "firebase-functions": "^3.16.0"
-  }
+  "homepage": "https://github.com/abythell/dd#readme"
 }
