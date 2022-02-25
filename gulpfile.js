@@ -8,3 +8,7 @@ gulp.task('default', function () {
     .pipe(minify())
     .pipe(gulp.dest('dist'))
 })
+
+gulp.task('watch', function () {
+  gulp.watch('./app/**/*.js', gulp.series('default'))
+})
