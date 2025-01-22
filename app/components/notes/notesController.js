@@ -29,7 +29,7 @@ angular.module('notesModule').controller('NotesController', ['dateService',
       userService.getCurrentUser().$loaded().then(function (user) {
         const date = new Date().getTime()
         const newNote = {
-          what: what,
+          what,
           when: date,
           who: user.name,
           uuid: user.$id
